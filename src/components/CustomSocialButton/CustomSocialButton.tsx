@@ -5,12 +5,18 @@ import Google from '../../assets/google.svg'
 import Facebook from '../../assets/facebook.svg'
 import Apple from '../../assets/apple.svg'
 
-const CustomSocialButton = () => {
+type Props = {
+  title:string
+ 
+};
+
+
+const CustomSocialButton:React.FC<Props> = ({title}) => {
   return (
     <View style={styles.container}>
     <View style={{alignSelf:'center',flexDirection:'row',alignItems:'center',marginTop:40}}>
       <View style={{flex: 1, height: 1, backgroundColor: Colors.defaultGrayColor}} />
-      <Text style={{color:'white'}}>    Or Login With    </Text>
+      <Text style={{color:'white'}}>    {title}   </Text>
       <View style={{flex: 1, height: 1, backgroundColor:  Colors.defaultGrayColor}} />
     </View>
     <View style={styles.cardContainer}>
@@ -30,7 +36,7 @@ const CustomSocialButton = () => {
 
 const styles = StyleSheet.create({
     container:{
-        marginHorizontal:65,
+        marginHorizontal: 68,
     },
     cardContainer:{
         flexDirection:'row',
@@ -39,7 +45,7 @@ const styles = StyleSheet.create({
     },
     card:{
         backgroundColor:'#484848',
-        height:60,
+        height:55,
         width:'30%',
         alignItems:'center',
         justifyContent:'center',

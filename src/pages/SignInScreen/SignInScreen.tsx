@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity,Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import BgImage from '../../assets/Login.png'
 import CustomInput from '../../components/CustomInput'
@@ -33,12 +33,18 @@ const SignInScreen = () => {
             <Text style={{ color: '#A09F99', textDecorationLine: 'underline' }}>forgot password?</Text>
           </TouchableOpacity>
         </View>
-        
+
         {/* Component */}
-        <CustomButton />
+        <CustomButton title={'Login'} />
          {/* Component */}
-        <CustomSocialButton/>
+        <CustomSocialButton title={'Or Login With '}/>
       
+        <View style={{flexDirection:'row', marginHorizontal: 68,justifyContent:'center',marginTop:Dimensions.get('window').height/8}} >
+          <Text style={{color:'white'}} >Don't have an account?</Text>
+          <TouchableOpacity>
+            <Text style={{color:Colors.defaultGreenColor,marginLeft:5}} >Sign Up</Text>
+          </TouchableOpacity>
+        </View>
         
       </ScrollView>
     </ImageBackground>

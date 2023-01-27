@@ -2,10 +2,14 @@ import { View, Text,StyleSheet,TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../../styles/Colors'
 
-const CustomButton = () => {
+export type Props = {
+    title:string
+  };
+
+const CustomButton:React.FC<Props> = ({title}) => {
   return (
    <TouchableOpacity style={styles.container} >
-    <Text style={styles.text}>Login</Text>
+    <Text style={styles.text}>{title}</Text>
    </TouchableOpacity>
   )
 }

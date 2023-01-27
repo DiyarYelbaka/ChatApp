@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignInScreen from './pages/SignInScreen';
 import SignUpScreen from './pages/SignUpScreen';
 import HomeScreen from './pages/HomeScreen';
+import WelcomeScreen from './pages/WelcomeScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,9 +17,11 @@ const Router = () => {
       headerShown:false
      }}
      >
+      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
        <Stack.Screen name="SignInScreen" component={SignInScreen} />
-       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+       
        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )
