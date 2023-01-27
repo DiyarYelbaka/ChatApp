@@ -6,9 +6,9 @@ export type Props = {
     title:string
   };
 
-const CustomButton:React.FC<Props> = ({title}) => {
+const CustomButton:React.FC<Props> = ({title,onPress}) => {
   return (
-   <TouchableOpacity style={styles.container} >
+   <TouchableOpacity style={styles.container} onPress={onPress} >
     <Text style={styles.text}>{title}</Text>
    </TouchableOpacity>
   )

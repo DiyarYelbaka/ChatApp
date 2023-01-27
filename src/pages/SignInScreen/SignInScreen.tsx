@@ -6,17 +6,52 @@ import { ScrollView } from 'react-native-gesture-handler'
 import CustomButton from '../../components/CustomButton'
 import Colors from '../../styles/Colors'
 import CustomSocialButton from '../../components/CustomSocialButton'
+import { useForm, Controller } from "react-hook-form";
 
-const SignInScreen = () => {
+const SignInScreen = ({navigation}) => {
+
+
+  const { handleSubmit, control, formState: { errors } } = useForm();
+
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  function onLoginPress(){
+    console.log('sa')
+  }
 
   return (
     <ImageBackground source={BgImage} style={styles.image}>
       <ScrollView>
         <Text style={styles.title}>Login</Text>
-        <CustomInput title={'Email'} placeholder={'Email Addres'} visiblePassword={false} />
-        <CustomInput title={'Password'} placeholder={'Password'} visiblePassword={true} />
+
+        <CustomInput 
+        title={'Email'} 
+        placeholder={'Email Addres'} 
+        visiblePassword={false} 
+        control={control}
+            name={'email'}
+            rules={{
+              required: 'Lütfen Email Adresinizi Giriniz.',
+              minLength: {
+                value: 2,
+                message: 'Geçersiz Email!'
+              },
+             
+            }}
+        />
+
+        <CustomInput 
+        title={'Password'} 
+        placeholder={'Password'} 
+        visiblePassword={true}
+        control={control}
+            name={'password'}
+            rules={{
+              required: 'Lütfen Şifrenizi Giriniz.',
+            }} 
+        />
+
         <View style={styles.rememberMeContainer} >
           <View style={{ flexDirection: 'row' }} >
             <Switch
@@ -35,14 +70,14 @@ const SignInScreen = () => {
         </View>
 
         {/* Component */}
-        <CustomButton title={'Login'} />
+        <CustomButton title={'Login'} onPress={handleSubmit(onLoginPress)} />
          {/* Component */}
         <CustomSocialButton title={'Or Login With '}/>
       
         <View style={{flexDirection:'row', marginHorizontal: 68,justifyContent:'center',marginTop:Dimensions.get('window').height/8}} >
           <Text style={{color:'white'}} >Don't have an account?</Text>
-          <TouchableOpacity>
-            <Text style={{color:Colors.defaultGreenColor,marginLeft:5}} >Sign Up</Text>
+          <TouchableOpacity onPress={()=> navigation.navigate('SignUpScreen') } >
+            <Text style={{color:Colors.defaultGreenColor,marginLeft:5,fontWeight:'bold'}} >Sign Up</Text>
           </TouchableOpacity>
         </View>
         

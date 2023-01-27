@@ -17,8 +17,8 @@ const Router = () => {
       headerShown:false
      }}
      >
-      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-       <Stack.Screen name="SignInScreen" component={SignInScreen} />
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        <Stack.Screen name="SignInScreen" component={SignInScreen} />
        
        <Stack.Screen name="HomeScreen" component={HomeScreen} />
        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
