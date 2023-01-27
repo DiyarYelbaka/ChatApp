@@ -41,14 +41,14 @@ const styles= StyleSheet.create({
       borderRadius:10,
 
       flexDirection:'row',
-      justifyContent:'space-between'
+      justifyContent:'space-between',
+      overflow:'hidden'
       
     },
     input:{
        height:52,
        marginLeft:10,
-
-       overflow:'hidden'
+       width:'80%'
     },
     text:{
         color:'white',
@@ -56,7 +56,8 @@ const styles= StyleSheet.create({
     },
     eyes:{
       alignSelf:'center',
-      marginRight:20
+      marginRight:20,
+
     }
 })
 

@@ -1,8 +1,6 @@
 const Colors = {
-    defaultOrangeColor:'#F45710',
-    defaultGreeyColor:'#313030',
-    defaultDarkColor:'#161616',
-    defaultWhiteColor:'white'
+    defaultGreenColor:'#0ACF83',
+    defaultGrayColor:'#A09F99'
   }
   
   export default Colors;
