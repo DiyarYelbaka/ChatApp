@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   },
   error:{
     color:Colors.defaultGreenColor,
-    fontSize:11
+    fontSize:11,
+    fontWeight:'bold'
   }
 })
 

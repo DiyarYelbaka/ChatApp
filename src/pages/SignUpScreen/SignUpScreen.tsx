@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity, Dimensions } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import BgImage from '../../assets/Login.png'
 import CustomInput from '../../components/CustomInput'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -10,6 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import authErrorMessageParser from '../../utils/authErrorMessageParser'
 import { showMessage} from "react-native-flash-message";
 import auth from '@react-native-firebase/auth';
+import { AuthContext } from '../../context/AuthContext'
 
 const SignUpScreen = ({ navigation }: any) => {
   
@@ -22,49 +23,21 @@ const SignUpScreen = ({ navigation }: any) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const [loading, setLoading] = useState(false);
+ 
+
+  const {register} = useContext(AuthContext)
 
 async function onSignUpPress(data) {
- 
-    try {
-      setLoading(true)
-     await auth().createUserWithEmailAndPassword(data.email,data.password)
-     showMessage({
-      message : "Kullanıcı Oluşturuldu",
-      type: "success",
-    });
-      
-    } catch (error) {
-      console.log(error)
-      setLoading(false)
-      showMessage({
-        message : authErrorMessageParser(error.code),
-        type: "danger",
-      });
-    }
+    const {email,password} = data;
+    return register(email,password)
   }
+
 
   return (
     <ImageBackground source={BgImage} style={styles.image}>
       <ScrollView>
         <Text style={styles.title}>Sign Up</Text>
-        <CustomInput
-          title={'User Name'}
-          placeholder={'User Name'}
-          visiblePassword={false}
-          control={control}
-          name={'username'}
-          rules={{
-            required: 'Please enter username.',
-            minLength: {
-              value: 1,
-              message: 'Invalid username.'
-            },
-        
-          }}
-          secureTextEntry={false}
-        />
-
+      
         <CustomInput
           title={'Email'}
           placeholder={'Email Addres'}

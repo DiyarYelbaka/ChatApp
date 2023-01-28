@@ -1,14 +1,25 @@
-import { View, Text } from 'react-native'
+import { View, Text,  } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import SignInScreen from './pages/SignInScreen';
 import SignUpScreen from './pages/SignUpScreen';
 import HomeScreen from './pages/HomeScreen';
 import WelcomeScreen from './pages/WelcomeScreen';
 import FlashMessage from "react-native-flash-message";
+import CustomSideMenu from './components/CustomSideMenu';
+import CustomTabIcon from './components/CustomTabIcon';
+import Colors from './styles/Colors';
+import MessageScreen from './pages/MessageScreen';
+import InMessageScreen from './pages/InMessageScreen';
+
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
 const Router = () => {
   return (
@@ -18,15 +29,72 @@ const Router = () => {
       headerShown:false
      }}
      >
+      
+       <Stack.Screen name="HomeScreen" component={MyDrawer} />
+       <Stack.Screen name="InMessageScreen" component={InMessageScreen} />
+       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
        <Stack.Screen name="SignInScreen" component={SignInScreen} />
        
-       <Stack.Screen name="HomeScreen" component={HomeScreen} />
-       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       </Stack.Navigator>
       <FlashMessage position="top" /> 
     </NavigationContainer>
   )
+
+
+
+function MyDrawer() {
+  return (
+    <Drawer.Navigator
+    drawerContent={props => <CustomSideMenu {...props} />}
+    screenOptions={{
+      headerShown:false
+     }}
+    >
+      <Drawer.Screen name="Feed" component={MyTabs} />
+      <Drawer.Screen name="Article" component={HomeScreen} />
+    </Drawer.Navigator>
+  );
+}
+
+function MyTabs() {
+  return (
+    <Tab.Navigator
+     screenOptions={{
+      headerShown:false,
+      tabBarShowLabel: false,
+      tabBarStyle: {
+        position: 'absolute',
+        elevation: 8,
+        backgroundColor: Colors.defaultDarkColor,
+        marginHorizontal:50,
+        height: 65,
+        bottom:15,
+        borderRadius:100,
+        borderTopWidth: 0
+        // borderBottomRightRadius:50,
+        // borderTopxLeftRadius:50
+      },
+    }}
+     >
+      <Tab.Screen name="Home" component={HomeScreen} 
+         options={{
+          tabBarIcon: ({ focused }) => (
+            <CustomTabIcon title='Ana Sayfa' focused={focused} source={1} />
+          ),
+        }}
+      />
+      <Tab.Screen name="Message" component={MessageScreen}
+      options={{
+        tabBarIcon: ({ focused }) => (
+          <CustomTabIcon title='Ana Sayfa' focused={focused} source={2} />
+        ),
+      }}
+       />
+    </Tab.Navigator>
+  );
+}
+
 }
 
 export default Router

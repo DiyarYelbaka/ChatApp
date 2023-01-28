@@ -1,9 +1,9 @@
-import { View, Text,StyleSheet,TouchableOpacity } from 'react-native'
+import { View, Text,StyleSheet,TouchableOpacity,SafeAreaView } from 'react-native'
 import React from 'react'
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/database';
 import Router from './src/Router';
-
+import { AuthProvider } from './src/context/AuthContext';
 
 
 const App = () => {
@@ -53,7 +53,12 @@ const App = () => {
  
 
   return (
-    <Router/>
+    <SafeAreaView style={{flex:1}}>
+      <AuthProvider>
+       <Router/>
+      </AuthProvider>
+    </SafeAreaView>
+   
     // <View style={styles.container} > 
     //   <TouchableOpacity onPress={onCheckDB} >
     //     <Text>Check DB</Text>

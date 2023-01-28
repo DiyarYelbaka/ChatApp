@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity, Dimensions } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import BgImage from '../../assets/Login.png'
 import CustomInput from '../../components/CustomInput'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -10,6 +10,7 @@ import auth from '@react-native-firebase/auth';
 import { useForm, Controller } from "react-hook-form";
 import { showMessage} from "react-native-flash-message";
 import authErrorMessageParser from '../../utils/authErrorMessageParser'
+import { AuthContext } from '../../context/AuthContext'
 
 const SignInScreen = ({ navigation }: any) => {
 
@@ -17,26 +18,20 @@ const SignInScreen = ({ navigation }: any) => {
   const { handleSubmit, control, formState: { errors } } = useForm();
 
   const [isEnabled, setIsEnabled] = useState(false);
-  const [loading, setLoading] = useState(false);
+
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+  const {login} = useContext(AuthContext)
+
   async function onLoginPress(data) {
-    try {
-      setLoading(true)
-     await auth().signInWithEmailAndPassword(data.email,data.password)
-      
-    } catch (error) {
-      console.log(error)
-      setLoading(false)
-      showMessage({
-        message : authErrorMessageParser(error.code),
-        type: "danger",
-      });
-    }
+    const { password, email } = data;
+    return login(email,password)
   }
+ 
 
   return (
+    
     <ImageBackground source={BgImage} style={styles.image}>
       <ScrollView>
         <Text style={styles.title}>Login</Text>
@@ -55,6 +50,7 @@ const SignInScreen = ({ navigation }: any) => {
             },
 
           }}
+          secureTextEntry={false}
         />
 
         <CustomInput
@@ -100,6 +96,7 @@ const SignInScreen = ({ navigation }: any) => {
 
       </ScrollView>
     </ImageBackground>
+  
   )
 }
 
