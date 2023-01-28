@@ -5,13 +5,18 @@ import Menu from '../../assets/menu.svg'
 import Logo from '../../assets/message.svg'
 import Colors from '../../styles/Colors'
 import BG from '../../assets/Login.png'
+import Back from '../../assets/back.svg'
 
 
-const CustomHeaderTop = ({onPress}) => {
+const CustomHeaderTop = ({onPress,onBackButton}:any) => {
   return (
     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}}  colors={[Colors.defaultDarkColor, '#3b5998' ]} style={styles.container}>
         <TouchableOpacity style={styles.menu} onPress={onPress} >
-           <Menu width={30} height={30}  style={{marginLeft:15}}   />
+            {onBackButton ? 
+            <Back width={30} height={30}  style={{marginLeft:15,color:Colors.defaultGreenColor}} /> :
+            <Menu width={30} height={30}  style={{marginLeft:15,color:Colors.defaultGreenColor}}   />
+             }
+           
         </TouchableOpacity>
         <View style={styles.menu2} >
             <Logo width={30} height={30} />

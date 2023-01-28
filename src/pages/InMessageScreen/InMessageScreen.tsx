@@ -1,14 +1,16 @@
 import { View, Text,StyleSheet,TextInput,TouchableOpacity } from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import CustomHeaderTop from '../../components/CustomHeaderTop'
 import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../../styles/Colors';
 import Send from '../../assets/send.svg'
 
+
 const InMessageScreen = ({navigation}) => {
+
   return (
     <>
-    <CustomHeaderTop onPress={()=> navigation.goBack()}/>
+    <CustomHeaderTop onPress={()=> navigation.goBack()} onBackButton={true} />
     <LinearGradient style={styles.container} colors={[  '#3b5998',Colors.defaultGreenColor ]} >
       <View style={styles.messageContainer}>
         <View style={styles.inputContainer}>
@@ -18,10 +20,11 @@ const InMessageScreen = ({navigation}) => {
           />
         </View> 
         
-        <TouchableOpacity style={styles.button} >
+        <TouchableOpacity style={styles.button} onPress={()=>toggleModal} >
            <Send width={30} height={30} />
         </TouchableOpacity>
       </View>
+      
     </LinearGradient>
     </>
   )
