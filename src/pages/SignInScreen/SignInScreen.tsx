@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity,Dimensions } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import BgImage from '../../assets/Login.png'
 import CustomInput from '../../components/CustomInput'
@@ -6,18 +6,34 @@ import { ScrollView } from 'react-native-gesture-handler'
 import CustomButton from '../../components/CustomButton'
 import Colors from '../../styles/Colors'
 import CustomSocialButton from '../../components/CustomSocialButton'
+import auth from '@react-native-firebase/auth';
 import { useForm, Controller } from "react-hook-form";
+import { showMessage} from "react-native-flash-message";
+import authErrorMessageParser from '../../utils/authErrorMessageParser'
 
-const SignInScreen = ({navigation}) => {
+const SignInScreen = ({ navigation }: any) => {
 
 
   const { handleSubmit, control, formState: { errors } } = useForm();
 
   const [isEnabled, setIsEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  function onLoginPress(){
-    console.log('sa')
+  async function onLoginPress(data) {
+    try {
+      setLoading(true)
+     await auth().signInWithEmailAndPassword(data.email,data.password)
+      
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+      showMessage({
+        message : authErrorMessageParser(error.code),
+        type: "danger",
+      });
+    }
   }
 
   return (
@@ -25,31 +41,32 @@ const SignInScreen = ({navigation}) => {
       <ScrollView>
         <Text style={styles.title}>Login</Text>
 
-        <CustomInput 
-        title={'Email'} 
-        placeholder={'Email Addres'} 
-        visiblePassword={false} 
-        control={control}
-            name={'email'}
-            rules={{
-              required: 'Lütfen Email Adresinizi Giriniz.',
-              minLength: {
-                value: 2,
-                message: 'Geçersiz Email!'
-              },
-             
-            }}
+        <CustomInput
+          title={'Email'}
+          placeholder={'Email Addres'}
+          visiblePassword={false}
+          control={control}
+          name={'email'}
+          rules={{
+            required: 'Please enter username.',
+            minLength: {
+              value: 2,
+              message: 'Geçersiz Email!'
+            },
+
+          }}
         />
 
-        <CustomInput 
-        title={'Password'} 
-        placeholder={'Password'} 
-        visiblePassword={true}
-        control={control}
-            name={'password'}
-            rules={{
-              required: 'Lütfen Şifrenizi Giriniz.',
-            }} 
+        <CustomInput
+          title={'Password'}
+          placeholder={'Password'}
+          visiblePassword={true}
+          control={control}
+          name={'password'}
+          rules={{
+            required: 'Please enter password.',
+          }}
+          secureTextEntry={true}
         />
 
         <View style={styles.rememberMeContainer} >
@@ -71,16 +88,16 @@ const SignInScreen = ({navigation}) => {
 
         {/* Component */}
         <CustomButton title={'Login'} onPress={handleSubmit(onLoginPress)} />
-         {/* Component */}
-        <CustomSocialButton title={'Or Login With '}/>
-      
-        <View style={{flexDirection:'row', marginHorizontal: 68,justifyContent:'center',marginTop:Dimensions.get('window').height/8}} >
-          <Text style={{color:'white'}} >Don't have an account?</Text>
-          <TouchableOpacity onPress={()=> navigation.navigate('SignUpScreen') } >
-            <Text style={{color:Colors.defaultGreenColor,marginLeft:5,fontWeight:'bold'}} >Sign Up</Text>
+        {/* Component */}
+        <CustomSocialButton title={'Or Login With '} />
+
+        <View style={{ flexDirection: 'row', marginHorizontal: 68, justifyContent: 'center', marginTop: Dimensions.get('window').height / 8 }} >
+          <Text style={{ color: 'white' }} >Don't have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')} >
+            <Text style={{ color: Colors.defaultGreenColor, marginLeft: 5, fontWeight: 'bold' }} >Sign Up</Text>
           </TouchableOpacity>
         </View>
-        
+
       </ScrollView>
     </ImageBackground>
   )
@@ -97,7 +114,8 @@ const styles = StyleSheet.create({
     fontSize: 28,
     alignSelf: 'center',
     fontWeight: 'bold',
-    marginTop: 120
+    marginTop: 120,
+    marginBottom: 20
   },
   rememberMeContainer: {
     flexDirection: 'row',
