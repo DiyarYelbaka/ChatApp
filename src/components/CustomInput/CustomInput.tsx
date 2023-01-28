@@ -12,9 +12,10 @@ type Props = {
   name:string
   control:any
   rules:any
+  secureTextEntry:boolean
 };
 
-const CustomInput: React.FC<Props> = ({ title, placeholder, visiblePassword = false,name,control,rules={},onChange, onBlur, value  }) => {
+const CustomInput: React.FC<Props> = ({ title, placeholder, visiblePassword = false,name,control,rules={},onChange, onBlur, value,secureTextEntry  }) => {
 
 
   const [visible, setVisible] = useState(false)
@@ -30,11 +31,13 @@ const CustomInput: React.FC<Props> = ({ title, placeholder, visiblePassword = fa
           <Text style={styles.text}>{title}</Text>
           <View style={styles.inputContainer}>
             <TextInput 
+            autoCapitalize='none'
             style={styles.input} 
             placeholder={placeholder}
             value={value}
             onChangeText={onChange} 
             onBlur={onBlur} 
+            secureTextEntry={secureTextEntry}
             />
           </View>
           {error && <Text style={styles.error}>{error.message ||'Error'}</Text>}
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
 
   },
   input: {
-    height: 52,
+    minHeight: 52,
     marginLeft: 10,
     width: '80%'
   },

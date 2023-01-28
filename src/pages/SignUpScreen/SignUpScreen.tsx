@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity,Dimensions } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import BgImage from '../../assets/Login.png'
 import CustomInput from '../../components/CustomInput'
@@ -7,98 +7,120 @@ import CustomButton from '../../components/CustomButton'
 import Colors from '../../styles/Colors'
 import CustomSocialButton from '../../components/CustomSocialButton'
 import { useForm, Controller } from "react-hook-form";
+import authErrorMessageParser from '../../utils/authErrorMessageParser'
+import { showMessage} from "react-native-flash-message";
+import auth from '@react-native-firebase/auth';
 
-const SignUpScreen = ({navigation}) => {
+const SignUpScreen = ({ navigation }: any) => {
+  
 
-  const { handleSubmit, control, formState: { errors } } = useForm();
+  const { handleSubmit, control, formState: { errors },watch } = useForm();
+
+  const pwd = watch('password')
+
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  function onSignUpPress(){
-    console.log('sa')
+  const [loading, setLoading] = useState(false);
+
+async function onSignUpPress(data) {
+ 
+    try {
+      setLoading(true)
+     await auth().createUserWithEmailAndPassword(data.email,data.password)
+     showMessage({
+      message : "Kullanıcı Oluşturuldu",
+      type: "success",
+    });
+      
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+      showMessage({
+        message : authErrorMessageParser(error.code),
+        type: "danger",
+      });
+    }
   }
 
   return (
     <ImageBackground source={BgImage} style={styles.image}>
       <ScrollView>
         <Text style={styles.title}>Sign Up</Text>
-        <CustomInput 
-        title={'User Name'} 
-        placeholder={'User Name'} 
-        visiblePassword={false} 
-        control={control}
-            name={'email'}
-            rules={{
-              required: 'Lütfen Email Adresinizi Giriniz.',
-              minLength: {
-                value: 2,
-                message: 'Geçersiz Email!'
-              },
-             
-            }}
-        />
-
-        <CustomInput 
-        title={'Email'} 
-        placeholder={'Email Addres'} 
-        visiblePassword={false}
-        control={control}
-            name={'email'}
-            rules={{
-              required: 'Lütfen Email Adresinizi Giriniz.',
-              minLength: {
-                value: 2,
-                message: 'Geçersiz Email!'
-              },
-             
-            }}
-         />
-
-        <CustomInput 
-        title={'Password'} 
-        placeholder={'Password'} 
-        visiblePassword={true}
-        control={control}
-            name={'password'}
-            rules={{
-              required: 'Lütfen Email Adresinizi Giriniz.',
-              minLength: {
-                value: 2,
-                message: 'Geçersiz Email!'
-              },
-             
-            }}
-         />
-
-        <CustomInput 
-        title={'Confirm Password'} 
-        placeholder={'Confirm Password'} 
-        visiblePassword={true} 
-        control={control}
-        name={'confirmPassword'}
-        rules={{
-          required: 'Lütfen Email Adresinizi Giriniz.',
-          minLength: {
-            value: 2,
-            message: 'Geçersiz Email!'
-          },
-         
-        }}
-        />
+        <CustomInput
+          title={'User Name'}
+          placeholder={'User Name'}
+          visiblePassword={false}
+          control={control}
+          name={'username'}
+          rules={{
+            required: 'Please enter username.',
+            minLength: {
+              value: 1,
+              message: 'Invalid username.'
+            },
         
+          }}
+          secureTextEntry={false}
+        />
+
+        <CustomInput
+          title={'Email'}
+          placeholder={'Email Addres'}
+          visiblePassword={false}
+          control={control}
+          name={'email'}
+          rules={{
+            required: 'Please enter email.',
+            minLength: {
+              value: 5,
+              message: 'Invalid email.'
+            },
+          }}
+          secureTextEntry={false}
+        />
+
+        <CustomInput
+          title={'Password'}
+          placeholder={'Password'}
+          visiblePassword={true}
+          control={control}
+          name={'password'}
+          rules={{
+            required: 'Please enter password.',
+            minLength: {
+              value: 5,
+              message: 'Invalid password.'
+            },
+          }}
+          secureTextEntry={true}
+        />
+
+        <CustomInput
+          title={'Confirm Password'}
+          placeholder={'Confirm Password'}
+          visiblePassword={true}
+          control={control}
+          name={'confirmPassword'}
+          rules={{
+            validate:value => value == pwd || 'password do not match'
+           }}
+           secureTextEntry={true}
+        />
+
         {/* Component */}
         <CustomButton title={'Sign Up'} onPress={handleSubmit(onSignUpPress)} />
-         {/* Component */}
-        <CustomSocialButton  title={'Or SignUp With '}/>
-      
-        <View style={{flexDirection:'row', marginHorizontal: 68,justifyContent:'center',marginTop:Dimensions.get('window').height/11,margin:20}} >
-          <Text style={{color:'white'}} >Already have an account?</Text>
-          <TouchableOpacity onPress={()=> navigation.navigate('SignInScreen') } >
-            <Text style={{color:Colors.defaultGreenColor,marginLeft:5,fontWeight:'bold'}} >Login</Text>
+        {/* Component */}
+        <CustomSocialButton title={'Or SignUp With '} />
+
+        <View style={{ flexDirection: 'row', marginHorizontal: 68, justifyContent: 'center', marginTop: Dimensions.get('window').height / 11, margin: 20 }} >
+          <Text style={{ color: 'white' }} >Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')} >
+            <Text style={{ color: Colors.defaultGreenColor, marginLeft: 5, fontWeight: 'bold' }} >Login</Text>
           </TouchableOpacity>
         </View>
-        
+
       </ScrollView>
     </ImageBackground>
   )
@@ -115,7 +137,8 @@ const styles = StyleSheet.create({
     fontSize: 28,
     alignSelf: 'center',
     fontWeight: 'bold',
-    marginTop: 40
+    marginTop: 50,
+    marginBottom: 10
   },
   rememberMeContainer: {
     flexDirection: 'row',
@@ -123,6 +146,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     justifyContent: 'space-between',
     marginHorizontal: 68,
+
   }
 });
 

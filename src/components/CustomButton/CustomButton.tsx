@@ -2,8 +2,9 @@ import { View, Text,StyleSheet,TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../../styles/Colors'
 
-export type Props = {
+ type Props = {
     title:string
+    onPress(): void
   };
 
 const CustomButton:React.FC<Props> = ({title,onPress}) => {
