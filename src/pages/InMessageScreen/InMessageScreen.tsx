@@ -1,26 +1,79 @@
-import { View, Text,StyleSheet,TextInput,TouchableOpacity } from 'react-native'
-import React,{useState} from 'react'
+import { View, Text,StyleSheet,TextInput,TouchableOpacity,FlatList } from 'react-native'
+import React,{useState,useEffect} from 'react'
 import CustomHeaderTop from '../../components/CustomHeaderTop'
 import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../../styles/Colors';
 import Send from '../../assets/send.svg'
+import { firebase } from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
+import parseContentData from '../../utils/parseContentData';
+import CustomMessageCard from '../../components/CustomMessageCard';
 
 
 const InMessageScreen = ({navigation}) => {
+
+  const [value, setValue]:any = useState('')
+  const [contentList, setContentList]:any = useState('')
+
+  useEffect(()=>{
+    const reference = firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref("messages/")
+    reference.on('value',snapshot => {
+     const contentData =  snapshot.val();
+     if(!contentData){
+      return;
+     }
+     const parsedData = parseContentData(contentData)
+     setContentList(parsedData)
+     
+    })
+  },[])
+
+
+  function onSendPress(){
+    // firebase.app().database('"https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/"').ref('messages/')
+  }
+
+  function sendContent(){
+
+    const userMail = auth().currentUser?.email
+
+    const contentObject = {
+      text:value,
+      username:userMail?.split('@')[0],
+      date: new Date().toISOString()
+    }
+    
+    firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref('messages/').push(contentObject)
+
+    setValue('')
+  }
+
+  const renderContent= ({item}) =>  <CustomMessageCard message={item} /> 
+
+  console.log(contentList)
 
   return (
     <>
     <CustomHeaderTop onPress={()=> navigation.goBack()} onBackButton={true} />
     <LinearGradient style={styles.container} colors={[  '#3b5998',Colors.defaultGreenColor ]} >
+
+     <FlatList
+        data={contentList}
+        renderItem={renderContent}
+        keyExtractor={item => item.id}
+      />
+
       <View style={styles.messageContainer}>
         <View style={styles.inputContainer}>
           <TextInput
              placeholder='Mesajınız'
              style={styles.input}
+             value={value}
+             onChangeText={setValue}
           />
         </View> 
         
-        <TouchableOpacity style={styles.button} onPress={()=>toggleModal} >
+        <TouchableOpacity style={styles.button} onPress={sendContent} >
            <Send width={30} height={30} />
         </TouchableOpacity>
       </View>
