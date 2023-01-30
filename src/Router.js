@@ -1,5 +1,5 @@
 import { View, Text,  } from 'react-native'
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -15,6 +15,7 @@ import CustomTabIcon from './components/CustomTabIcon';
 import Colors from './styles/Colors';
 import MessageScreen from './pages/MessageScreen';
 import InMessageScreen from './pages/InMessageScreen';
+import auth from '@react-native-firebase/auth';
 
 
 const Stack = createStackNavigator();
@@ -22,6 +23,16 @@ const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 const Router = () => {
+
+  const [userSession, setUserSession] = useState()
+
+  useEffect(() => {
+    auth().onAuthStateChanged((user)=>{
+      setUserSession(!!user)
+    });
+  }, []);
+  
+
   return (
     <NavigationContainer>
      <Stack.Navigator
@@ -29,13 +40,21 @@ const Router = () => {
       headerShown:false
      }}
      >
-      
-       <Stack.Screen name="HomeScreen" component={MyDrawer} />
+      {
+        !userSession ?
+        <>
+        <Stack.Screen name="SignInScreen" component={SignInScreen} />
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+        
+        </>
+        :
+        <>
+        <Stack.Screen name="HomeScreen" component={MyDrawer} />
        <Stack.Screen name="InMessageScreen" component={InMessageScreen} />
-       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-       <Stack.Screen name="SignInScreen" component={SignInScreen} />
        
+        </>
+      }
       </Stack.Navigator>
       <FlashMessage position="top" /> 
     </NavigationContainer>

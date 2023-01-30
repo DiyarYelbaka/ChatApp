@@ -28,9 +28,9 @@ const CustomMessageCard = ({message}) => {
      <View style={styles.left}/>
 
     <LinearGradient start={{x: 0, y: 0.75}} end={{x: 1, y: 0.25}} 
-     colors={[Colors.defaultGreenColor,Colors.defaultDarkColor ]} style={{  flex:1 ,borderTopRightRadius:20,borderBottomLeftRadius:20,}} >
+     colors={[Colors.defaultGreenColor,Colors.defaultDarkColor ]} style={{  flex:1 ,borderTopRightRadius:20,borderBottomLeftRadius:20,borderBottomRightRadius:20}} >
       <Text style={{color:'black',marginLeft:10}} >{message.username}</Text>
-      <Text style={{color:'white',marginLeft:10}} >{message.text}</Text>
+      <Text style={{color:'white',marginLeft:10,padding:10}} >{message.text}</Text>
       <View>
 
       </View>
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         borderRadius:50,
         marginLeft:5,
+      
     },
     left:{
      width:'2%',

@@ -8,11 +8,8 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-  
   const [loading, setLoading] = useState(false)
 
-
-  
   const register = async (email,password) => {
     try {
       setLoading(true)
@@ -52,8 +49,8 @@ export const AuthProvider = ({ children }) => {
     
   }
 
-  const logout = async () => {
- 
+  const logOut = async () => {
+    auth().signOut().then(() => console.log('User signed out!'));
   };
 
  
@@ -62,6 +59,7 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider
     value={{
     login,
-    register
+    register,
+    logOut
     }}>{children}</AuthContext.Provider>
 }

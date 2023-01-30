@@ -19,10 +19,8 @@ const InMessageScreen = ({navigation}) => {
     const reference = firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref("messages/")
     reference.on('value',snapshot => {
      const contentData =  snapshot.val();
-     if(!contentData){
-      return;
-     }
-     const parsedData = parseContentData(contentData)
+     
+     const parsedData = parseContentData(contentData || {})
      setContentList(parsedData)
      
     })
@@ -61,6 +59,7 @@ const InMessageScreen = ({navigation}) => {
         data={contentList}
         renderItem={renderContent}
         keyExtractor={item => item.id}
+        contentContainerStyle={{paddingBottom:90}}
       />
 
       <View style={styles.messageContainer}>

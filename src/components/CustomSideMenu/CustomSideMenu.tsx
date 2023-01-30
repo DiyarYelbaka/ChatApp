@@ -1,11 +1,19 @@
 import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import BG from '../../assets/Login.png'
 import profil from '../../assets/profile.png'
 import Colors from '../../styles/Colors'
 import LinearGradient from 'react-native-linear-gradient';
+import { AuthContext } from '../../context/AuthContext'
 
 const CustomSideMenu = () => {
+
+    const {logOut} = useContext(AuthContext)
+
+    function handlePress(){
+        return logOut()
+    }
+
     return ( 
      
         <LinearGradient colors={[Colors.defaultDarkColor, '#3b5998', Colors.defaultGreenColor]} style={{flex:1}}>
@@ -21,7 +29,7 @@ const CustomSideMenu = () => {
                 <Text style={{ alignSelf: 'center', color: 'white', fontSize: 22, fontWeight: 'bold', marginTop: 5 }} >Diyar</Text>
                
             
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handlePress} >
                     <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }} >Log Out</Text>
                 </TouchableOpacity>
  
