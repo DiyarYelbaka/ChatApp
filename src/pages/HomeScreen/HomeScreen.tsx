@@ -10,28 +10,31 @@ import Colors from '../../styles/Colors';
 const HomeScreen = ({navigation}) => {
   const DATA = [
     {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      id: '1bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'First Item',
+      url:'https://raw.githubusercontent.com/DiyarYelbaka/ChatApp/main/src/assets/carousel/snap1.png'
     },
     {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      id: '23ac68afc-c605-48d3-a4f8-fbd91aa97f63',
       title: 'Second Item',
+      url:'https://raw.githubusercontent.com/DiyarYelbaka/ChatApp/main/src/assets/carousel/snap2.png'
     },
     {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      id: '458694a0f-3da1-471f-bd96-145571e29d72',
       title: 'Third Item',
+      url:'https://raw.githubusercontent.com/DiyarYelbaka/ChatApp/main/src/assets/carousel/snap4.png'
     },
   ];
 
-   const _renderItem = ({item, index}) => {
+   const _renderItem = ({item}) => {
     return (
-        <View style={{height:200,marginTop:20,borderRadius:20}} >
+      <LinearGradient style={{height:200,marginTop:20,borderRadius:20,elevation:15}}  colors={[  '#3b5998',Colors.defaultGreenColor ]} >
           <Image
           style={{height:200,width:'100%'}}
-          source={require('../../assets/carousel/snap2.png')}
+          source={{uri :item.url} }
           resizeMode={'contain'}
          />
-        </View>
+        </LinearGradient>
     );
 }
 
@@ -49,9 +52,12 @@ const HomeScreen = ({navigation}) => {
               autoplay={true}
               autoplayDelay={5}
               loop={true}
-             
       />
       <Text>HomeScasdreen</Text>
+
+        {/* <View style={{backgroundColor:'red',width:100,height:100}}>
+        <Text>ask</Text>
+       </View> */}
       </LinearGradient>
     </ScrollView>
     </>

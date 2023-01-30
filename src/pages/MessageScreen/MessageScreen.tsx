@@ -48,7 +48,7 @@ const MessageScreen = ({ navigation }) => {
   return (
     <>
       <CustomHeaderTop onPress={() => navigation.openDrawer()} />
-      <LinearGradient colors={[Colors.defaultDarkColor, '#3b5998',]} style={styles.container}>
+      <LinearGradient colors={['#3b5998',Colors.defaultGreenColor, ]} style={styles.container}>
       <View style={{marginTop:30}} />
       <FlatList
         data={DATA}
@@ -68,7 +68,8 @@ const MessageScreen = ({ navigation }) => {
        onBackButtonPress={toggleModal}
        onBackdropPress={toggleModal}
        >
-        <LinearGradient colors={[Colors.defaultGreenColor, '#3b5998',]} style={styles.modalContainer}>
+        
+        <LinearGradient colors={['#3b5998',Colors.defaultGreenColor, ]} style={styles.modalContainer}>
           <View style={styles.modalInputContainer} >
           <TextInput
             placeholder='Oda İsmi'
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius:50,
     borderBottomLeftRadius:50,
     elevation:10,
-    borderWidth:2,
+    borderWidth:1,
     borderColor:Colors.defaultDarkColor,
     justifyContent:'center',
     alignItems:'center',

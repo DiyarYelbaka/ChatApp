@@ -38,6 +38,7 @@ const CustomInput: React.FC<Props> = ({ title, placeholder, visiblePassword = fa
             onChangeText={onChange} 
             onBlur={onBlur} 
             secureTextEntry={secureTextEntry}
+           
             />
           </View>
           {error && <Text style={styles.error}>{error.message ||'Error'}</Text>}

@@ -33,12 +33,17 @@ const InMessageScreen = ({navigation}) => {
 
   function sendContent(){
 
+    if(value==''){
+      return;
+    }
+
     const userMail = auth().currentUser?.email
 
     const contentObject = {
       text:value,
       username:userMail?.split('@')[0],
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
+      like:0
     }
     
     firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref('messages/').push(contentObject)
@@ -46,7 +51,11 @@ const InMessageScreen = ({navigation}) => {
     setValue('')
   }
 
-  const renderContent= ({item}) =>  <CustomMessageCard message={item} /> 
+  function onHandleHeart(item){
+    firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`messages/${item.id}/`).update({like:item.like+1})
+  }
+
+  const renderContent= ({item}) =>  <CustomMessageCard message={item} onPress={()=>onHandleHeart(item)} /> 
 
   console.log(contentList)
 
