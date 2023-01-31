@@ -28,7 +28,7 @@ const HomeScreen = ({navigation}) => {
 
    const _renderItem = ({item}) => {
     return (
-      <LinearGradient style={{height:200,marginTop:20,borderRadius:20,elevation:15}}  colors={[  '#3b5998',Colors.defaultGreenColor ]} >
+      <LinearGradient style={{height:200,marginTop:20,borderRadius:20,elevation:15}}  colors={[  Colors.defaultBlueColor,Colors.defaultGreenColor ]} >
           <Image
           style={{height:200,width:'100%'}}
           source={{uri :item.url} }
@@ -43,7 +43,7 @@ const HomeScreen = ({navigation}) => {
     <>
     <CustomHeaderTop onPress={()=> navigation.openDrawer()}/>
     <ScrollView>
-    <LinearGradient style={styles.container} colors={[  '#3b5998',Colors.defaultGreenColor ]} >
+    <LinearGradient style={styles.container} colors={[  Colors.defaultBlueColor,Colors.defaultGreenColor ]} >
     <Carousel
               data={DATA}
               renderItem={_renderItem}

@@ -10,7 +10,7 @@ import Back from '../../assets/back.svg'
 
 const CustomHeaderTop = ({onPress,onBackButton}:any) => {
   return (
-    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}}  colors={[Colors.defaultDarkColor, '#3b5998' ]} style={styles.container}>
+    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}}  colors={[Colors.defaultDarkColor, Colors.defaultBlueColor ]} style={styles.container}>
         <TouchableOpacity style={styles.menu} onPress={onPress} >
             {onBackButton ? 
             <Back width={30} height={30}  style={{marginLeft:15,color:Colors.defaultGreenColor}} /> :

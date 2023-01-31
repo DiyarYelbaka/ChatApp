@@ -1,62 +1,77 @@
 import { View, Text, StyleSheet,TouchableOpacity,ScrollView,FlatList,Dimensions,TextInput } from 'react-native'
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import CustomHeaderTop from '../../components/CustomHeaderTop'
 import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../../styles/Colors';
 import AddRom from '../../assets/addRom.svg'
 import Modal from "react-native-modal";
+import { firebase } from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
+import parseContentData from '../../utils/parseContentData';
+import parseContentUserData from '../../utils/parseContentUserData';
 
 const MessageScreen = ({ navigation }) => {
 
+  const [value, setValue]:any = useState('')
   const [isModalVisible, setModalVisible] = useState(false);
-
+  const [contentList, setContentList]:any = useState('')
+  const [user, setUser]:any = useState('')
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Aşk',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Yazılım',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Okul',
-    },
-    {
-      id: '586943a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Hayat',
-    },
-    
-    
-  ];
+  function sendContent(){
 
-  const Item = ({title}) => (
-    <TouchableOpacity onPress={()=> navigation.navigate("InMessageScreen") }>
-    <LinearGradient style={styles.cardContainer} colors={[Colors.defaultGreenColor, '#3b5998' ]} >
+    if(value==''){
+      return;
+    }
+
+    const contentObject = {
+      title:value,
+      date: new Date().toISOString(),
+    }
+    
+    firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/`).push(contentObject)
+
+    setModalVisible(false)
+    setValue('')
+  }
+
+  useEffect(()=>{
+    const reference = firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/`)
+    reference.on('value',snapshot => {
+     const contentData =  snapshot.val();
+     
+     const parsedData = parseContentData(contentData || {})
+     setContentList(parsedData)
+     
+     
+    })
+  },[])
+
+  
+
+  const Item = ({title,id}) => (
+    <TouchableOpacity onPress={()=> navigation.navigate("InMessageScreen",{id}) }>
+    <LinearGradient style={styles.cardContainer} colors={[Colors.defaultGreenColor,Colors.defaultBlueColor ]} >
       <Text style={styles.cardTitle}>{title}</Text>
     </LinearGradient>
     </TouchableOpacity>
   );
   
+  // console.log(contentList)
 
-  
   return (
     <>
       <CustomHeaderTop onPress={() => navigation.openDrawer()} />
-      <LinearGradient colors={['#3b5998',Colors.defaultGreenColor, ]} style={styles.container}>
+      <LinearGradient colors={[Colors.defaultBlueColor,Colors.defaultGreenColor, ]} style={styles.container}>
       <View style={{marginTop:30}} />
       <FlatList
-        data={DATA}
-        renderItem={({item}) => <Item title={item.title} />}
+        data={contentList}
+        renderItem={({item}) => <Item title={item.title} id={item.id} />}
         keyExtractor={item => item.id}
         numColumns={2}
-        contentContainerStyle={{alignItems:'center'}}
-       
+        contentContainerStyle={{alignItems:'center',paddingBottom:90}}
       />
 
         <TouchableOpacity style={styles.button} onPress={toggleModal} >
@@ -69,14 +84,16 @@ const MessageScreen = ({ navigation }) => {
        onBackdropPress={toggleModal}
        >
         
-        <LinearGradient colors={['#3b5998',Colors.defaultGreenColor, ]} style={styles.modalContainer}>
+        <LinearGradient colors={[Colors.defaultBlueColor,Colors.defaultGreenColor, ]} style={styles.modalContainer}>
           <View style={styles.modalInputContainer} >
           <TextInput
             placeholder='Oda İsmi'
             style={styles.modalInput}
+            value={value}
+            onChangeText={setValue}
           />
           </View>
-          <TouchableOpacity style={{backgroundColor:Colors.defaultDarkColor,width:'30%',height:40,justifyContent:'center',marginTop:20,alignSelf:'center',borderTopRightRadius:20,borderBottomLeftRadius:20}}>
+          <TouchableOpacity style={styles.modalButton} onPress={sendContent} >
            <Text style={{alignSelf:'center',color:'white',fontSize:22,fontWeight:'bold'}} >Oda Aç</Text>
           </TouchableOpacity>
         </LinearGradient>
@@ -95,6 +112,16 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius:100,
     borderTopRightRadius:100,
     justifyContent:'center'
+  },
+  modalButton:{
+    backgroundColor:Colors.defaultDarkColor,
+    width:'30%',
+    height:40,
+    justifyContent:'center',
+    marginTop:20,
+    alignSelf:'center',
+    borderTopRightRadius:20,
+    borderBottomLeftRadius:20
   },
   modalInputContainer:{
     backgroundColor:'white',

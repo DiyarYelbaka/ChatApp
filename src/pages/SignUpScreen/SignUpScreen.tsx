@@ -28,8 +28,8 @@ const SignUpScreen = ({ navigation }: any) => {
   const {register} = useContext(AuthContext)
 
 async function onSignUpPress(data) {
-    const {email,password} = data;
-    return register(email,password)
+    const {email,password,username} = data;
+    return register(email,password,username)
   }
 
 
@@ -37,6 +37,21 @@ async function onSignUpPress(data) {
     <ImageBackground source={BgImage} style={styles.image}>
       <ScrollView>
         <Text style={styles.title}>Sign Up</Text>
+        <CustomInput
+          title={'User Name'}
+          placeholder={'User Name'}
+          visiblePassword={false}
+          control={control}
+          name={'username'}
+          rules={{
+            required: 'Please enter username.',
+            minLength: {
+              value: 1,
+              message: 'Invalid username.'
+            },
+          }}
+          secureTextEntry={false}
+        />
       
         <CustomInput
           title={'Email'}
