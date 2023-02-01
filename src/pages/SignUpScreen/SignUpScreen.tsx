@@ -11,10 +11,12 @@ import authErrorMessageParser from '../../utils/authErrorMessageParser'
 import { showMessage} from "react-native-flash-message";
 import auth from '@react-native-firebase/auth';
 import { AuthContext } from '../../context/AuthContext'
+import { useSelector} from 'react-redux'
+import LinearGradient from 'react-native-linear-gradient';
 
 const SignUpScreen = ({ navigation }: any) => {
   
-
+  const gradiantColors = useSelector((state) => state.backGradientColor)
   const { handleSubmit, control, formState: { errors },watch } = useForm();
 
   const pwd = watch('password')
@@ -34,7 +36,7 @@ async function onSignUpPress(data) {
 
 
   return (
-    <ImageBackground source={BgImage} style={styles.image}>
+    <LinearGradient colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor,]} style={styles.container}>
       <ScrollView>
         <Text style={styles.title}>Sign Up</Text>
         <CustomInput
@@ -105,17 +107,17 @@ async function onSignUpPress(data) {
         <View style={{ flexDirection: 'row', marginHorizontal: 68, justifyContent: 'center', marginTop: Dimensions.get('window').height / 11, margin: 20 }} >
           <Text style={{ color: 'white' }} >Already have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')} >
-            <Text style={{ color: Colors.defaultGreenColor, marginLeft: 5, fontWeight: 'bold' }} >Login</Text>
+            <Text style={{ color:'white', marginLeft: 5, fontWeight: 'bold' }} >Login</Text>
           </TouchableOpacity>
         </View>
 
       </ScrollView>
-    </ImageBackground>
+    </LinearGradient>
   )
 }
 
 const styles = StyleSheet.create({
-  image: {
+  container: {
     flex: 1,
     width: '120%',
     alignSelf: 'center'

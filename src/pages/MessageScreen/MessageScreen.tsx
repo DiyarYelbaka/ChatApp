@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet,TouchableOpacity,ScrollView,FlatList,Dimensions,TextInput } from 'react-native'
+import { View, Text, StyleSheet,TouchableOpacity,ScrollView,FlatList,Dimensions,TextInput,Alert } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import CustomHeaderTop from '../../components/CustomHeaderTop'
 import LinearGradient from 'react-native-linear-gradient';
@@ -6,9 +6,7 @@ import Colors from '../../styles/Colors';
 import AddRom from '../../assets/addRom.svg'
 import Modal from "react-native-modal";
 import { firebase } from '@react-native-firebase/database';
-import auth from '@react-native-firebase/auth';
 import parseContentData from '../../utils/parseContentData';
-import parseContentUserData from '../../utils/parseContentUserData';
 import { useSelector} from 'react-redux'
 
 const MessageScreen = ({ navigation }) => {
@@ -48,14 +46,22 @@ const MessageScreen = ({ navigation }) => {
      const parsedData = parseContentData(contentData || {})
      setContentList(parsedData)
      
-     
     })
   },[])
+
+ async function onDeleteCardPress(id){
+  try {
+    await firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/${id}`).remove()
+
+  } catch (error) {
+    Alert.alert('hata','Silinemedi')
+  }
+  }
 
   
 
   const Item = ({title,id}) => (
-    <TouchableOpacity onPress={()=> navigation.navigate("InMessageScreen",{id}) }>
+    <TouchableOpacity  onLongPress={()=> onDeleteCardPress(id)} onPress={()=> navigation.navigate("InMessageScreen",{id}) }>
     <LinearGradient style={styles.cardContainer} colors={[gradiantColors.defaultGreenColor,gradiantColors.defaultBlueColor ]} >
       <Text style={styles.cardTitle}>{title}</Text>
     </LinearGradient>

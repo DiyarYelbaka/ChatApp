@@ -8,10 +8,12 @@ import Colors from '../../styles/Colors'
 import CustomSocialButton from '../../components/CustomSocialButton'
 import { useForm, Controller } from "react-hook-form";
 import { AuthContext } from '../../context/AuthContext'
+import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux'
 
 const SignInScreen = ({ navigation }: any) => {
 
-
+  const gradiantColors = useSelector((state) => state.backGradientColor)
   const { handleSubmit, control, formState: { errors } } = useForm();
 
   const [isEnabled, setIsEnabled] = useState(false);
@@ -19,17 +21,17 @@ const SignInScreen = ({ navigation }: any) => {
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const {login} = useContext(AuthContext)
+  const { login } = useContext(AuthContext)
 
   async function onLoginPress(data) {
     const { password, email } = data;
-    return login(email,password)
+    return login(email, password)
   }
- 
+
 
   return (
-    
-    <ImageBackground source={BgImage} style={styles.image}>
+
+    <LinearGradient colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor,]} style={styles.container}>
       <ScrollView>
         <Text style={styles.title}>Login</Text>
 
@@ -66,16 +68,16 @@ const SignInScreen = ({ navigation }: any) => {
           <View style={{ flexDirection: 'row' }} >
             <Switch
               trackColor={{ false: '#767577', true: '#81b0ff' }}
-              thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+              thumbColor={isEnabled ? Colors.defaultGreenColor : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
               value={isEnabled}
-              style={{ alignSelf: 'flex-start', transform: [{ scaleX: 1.1 }, { scaleY: 1.2 }] }}
+              style={{ alignSelf: 'flex-start' }}
             />
-            <Text style={{ color: '#A09F99', alignSelf: 'center' }} >Remember Me</Text>
+            <Text style={{ color: 'white', alignSelf: 'center' }} >Remember Me</Text>
           </View>
-          <TouchableOpacity  >
-            <Text style={{ color: '#A09F99', textDecorationLine: 'underline' }}>forgot password?</Text>
+          <TouchableOpacity style={{ elevation: 5 }}  >
+            <Text style={{ color: 'white', textDecorationLine: 'underline' }}>forgot password?</Text>
           </TouchableOpacity>
         </View>
 
@@ -87,18 +89,18 @@ const SignInScreen = ({ navigation }: any) => {
         <View style={{ flexDirection: 'row', marginHorizontal: 68, justifyContent: 'center', marginTop: Dimensions.get('window').height / 8 }} >
           <Text style={{ color: 'white' }} >Don't have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')} >
-            <Text style={{ color: Colors.defaultGreenColor, marginLeft: 5, fontWeight: 'bold' }} >Sign Up</Text>
+            <Text style={{ color: 'white', marginLeft: 5, fontWeight: 'bold' }} >Sign Up</Text>
           </TouchableOpacity>
         </View>
 
       </ScrollView>
-    </ImageBackground>
-  
+    </LinearGradient>
+
   )
 }
 
 const styles = StyleSheet.create({
-  image: {
+  container: {
     flex: 1,
     width: '120%',
     alignSelf: 'center'

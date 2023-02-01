@@ -15,9 +15,9 @@ const CustomSocialButton:React.FC<Props> = ({title}) => {
   return (
     <View style={styles.container}>
     <View style={{alignSelf:'center',flexDirection:'row',alignItems:'center',marginTop:40}}>
-      <View style={{flex: 1, height: 1, backgroundColor: Colors.defaultGrayColor}} />
+      <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
       <Text style={{color:'white'}}>    {title}   </Text>
-      <View style={{flex: 1, height: 1, backgroundColor:  Colors.defaultGrayColor}} />
+      <View style={{flex: 1, height: 1, backgroundColor:  'white'}} />
     </View>
     <View style={styles.cardContainer}>
      <TouchableOpacity style={styles.card}>

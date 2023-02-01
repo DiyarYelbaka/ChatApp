@@ -19,7 +19,6 @@ const CustomSideMenu = () => {
     const gradiantColors = useSelector((state) => state.backGradientColor)
     const dispatch = useDispatch()
 
-    console.log(gradiantColors)
 
     useEffect(() => {
         getUser()
@@ -117,12 +116,11 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 10,
         borderColor: 'white',
         alignSelf: 'center',
         marginTop: 60,
-        backgroundColor: '#95A5A6'
     }
 })
 
