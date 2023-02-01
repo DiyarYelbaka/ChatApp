@@ -6,11 +6,13 @@ import Logo from '../../assets/message.svg'
 import Colors from '../../styles/Colors'
 import BG from '../../assets/Login.png'
 import Back from '../../assets/back.svg'
+import { useSelector} from 'react-redux'
 
 
 const CustomHeaderTop = ({onPress,onBackButton}:any) => {
+    const gradiantColors = useSelector((state) => state.backGradientColor)
   return (
-    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}}  colors={[Colors.defaultDarkColor, Colors.defaultBlueColor ]} style={styles.container}>
+    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}}  colors={[gradiantColors.defaultDarkColor, gradiantColors.defaultBlueColor ]} style={styles.container}>
         <TouchableOpacity style={styles.menu} onPress={onPress} >
             {onBackButton ? 
             <Back width={30} height={30}  style={{marginLeft:15,color:Colors.defaultGreenColor}} /> :

@@ -9,9 +9,11 @@ import auth from '@react-native-firebase/auth';
 import parseContentData from '../../utils/parseContentData';
 import CustomMessageCard from '../../components/CustomMessageCard';
 import parseContentUserData from '../../utils/parseContentUserData';
-
+import { useSelector} from 'react-redux'
 
 const InMessageScreen = ({ navigation, route }) => {
+
+  const gradiantColors = useSelector((state) => state.backGradientColor)
 
   const { id } = route.params;
 
@@ -95,13 +97,15 @@ const InMessageScreen = ({ navigation, route }) => {
   return (
     <>
       <CustomHeaderTop onPress={() => navigation.goBack()} onBackButton={true} />
-      <LinearGradient style={styles.container} colors={[Colors.defaultBlueColor, Colors.defaultGreenColor]} >
+      <LinearGradient style={styles.container} colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor]} >
 
         <FlatList
           data={contentList}
           renderItem={renderContent}
           keyExtractor={item => item.id}
-          contentContainerStyle={{ paddingBottom: 90 }}
+          contentContainerStyle={{ paddingTop: 90 }}
+          inverted
+          
         />
 
         <View style={styles.messageContainer}>

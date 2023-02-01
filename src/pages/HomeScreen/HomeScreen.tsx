@@ -1,13 +1,15 @@
-import { View, Text,StyleSheet,ScrollView,Dimensions,Image } from 'react-native'
+import { View, Text,StyleSheet,ScrollView,Dimensions,Image,TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomHeaderTop from '../../components/CustomHeaderTop'
 import LinearGradient from 'react-native-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
 import Colors from '../../styles/Colors';
 
+import { useSelector} from 'react-redux'
 
 
 const HomeScreen = ({navigation}) => {
+  const gradiantColors = useSelector((state) => state.backGradientColor)
   const DATA = [
     {
       id: '1bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -26,9 +28,10 @@ const HomeScreen = ({navigation}) => {
     },
   ];
 
+
    const _renderItem = ({item}) => {
     return (
-      <LinearGradient style={{height:200,marginTop:20,borderRadius:20,elevation:15}}  colors={[  Colors.defaultBlueColor,Colors.defaultGreenColor ]} >
+      <LinearGradient style={{height:200,marginTop:20,borderRadius:20,elevation:15}}  colors={[  gradiantColors.defaultBlueColor,gradiantColors.defaultGreenColor ]} >
           <Image
           style={{height:200,width:'100%'}}
           source={{uri :item.url} }
@@ -43,7 +46,7 @@ const HomeScreen = ({navigation}) => {
     <>
     <CustomHeaderTop onPress={()=> navigation.openDrawer()}/>
     <ScrollView>
-    <LinearGradient style={styles.container} colors={[  Colors.defaultBlueColor,Colors.defaultGreenColor ]} >
+    <LinearGradient style={styles.container} colors={[  gradiantColors.defaultBlueColor,gradiantColors.defaultGreenColor ]} >
     <Carousel
               data={DATA}
               renderItem={_renderItem}
@@ -54,7 +57,7 @@ const HomeScreen = ({navigation}) => {
               loop={true}
       />
       <Text>HomeScasdreen</Text>
-
+    
         {/* <View style={{backgroundColor:'red',width:100,height:100}}>
         <Text>ask</Text>
        </View> */}
@@ -66,7 +69,7 @@ const HomeScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container:{
-    height:800
+   height:800
   }
 })
 

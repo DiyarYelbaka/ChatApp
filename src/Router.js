@@ -17,12 +17,16 @@ import MessageScreen from './pages/MessageScreen';
 import InMessageScreen from './pages/InMessageScreen';
 import auth from '@react-native-firebase/auth';
 
+import { useSelector } from 'react-redux'
+
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 const Router = () => {
+
+  const gradiantColors = useSelector((state) => state.backGradientColor)
 
   const [userSession, setUserSession] = useState()
 
@@ -69,8 +73,14 @@ function MyDrawer() {
     <Drawer.Navigator
     drawerContent={props => <CustomSideMenu {...props} />}
     screenOptions={{
-      headerShown:false
+      headerShown:false ,
+      drawerStyle: {
+        backgroundColor: 'transparent',
+        width: '65%',
+      },
      }}
+     
+     
     >
       <Drawer.Screen name="Feed" component={MyTabs} />
       <Drawer.Screen name="Article" component={HomeScreen} />

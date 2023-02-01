@@ -9,8 +9,11 @@ import { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import parseContentData from '../../utils/parseContentData';
 import parseContentUserData from '../../utils/parseContentUserData';
+import { useSelector} from 'react-redux'
 
 const MessageScreen = ({ navigation }) => {
+
+  const gradiantColors = useSelector((state) => state.backGradientColor)
 
   const [value, setValue]:any = useState('')
   const [isModalVisible, setModalVisible] = useState(false);
@@ -53,7 +56,7 @@ const MessageScreen = ({ navigation }) => {
 
   const Item = ({title,id}) => (
     <TouchableOpacity onPress={()=> navigation.navigate("InMessageScreen",{id}) }>
-    <LinearGradient style={styles.cardContainer} colors={[Colors.defaultGreenColor,Colors.defaultBlueColor ]} >
+    <LinearGradient style={styles.cardContainer} colors={[gradiantColors.defaultGreenColor,gradiantColors.defaultBlueColor ]} >
       <Text style={styles.cardTitle}>{title}</Text>
     </LinearGradient>
     </TouchableOpacity>
@@ -64,7 +67,7 @@ const MessageScreen = ({ navigation }) => {
   return (
     <>
       <CustomHeaderTop onPress={() => navigation.openDrawer()} />
-      <LinearGradient colors={[Colors.defaultBlueColor,Colors.defaultGreenColor, ]} style={styles.container}>
+      <LinearGradient colors={[gradiantColors.defaultBlueColor,gradiantColors.defaultGreenColor, ]} style={styles.container}>
       <View style={{marginTop:30}} />
       <FlatList
         data={contentList}
@@ -84,7 +87,7 @@ const MessageScreen = ({ navigation }) => {
        onBackdropPress={toggleModal}
        >
         
-        <LinearGradient colors={[Colors.defaultBlueColor,Colors.defaultGreenColor, ]} style={styles.modalContainer}>
+        <LinearGradient colors={[gradiantColors.defaultBlueColor,gradiantColors.defaultGreenColor, ]} style={styles.modalContainer}>
           <View style={styles.modalInputContainer} >
           <TextInput
             placeholder='Oda İsmi'
@@ -151,17 +154,17 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   cardContainer:{
-    backgroundColor:Colors.defaultGreenColor,
     height:160,
     margin:10,
     width:Dimensions.get('window').width/2.3,
     borderTopRightRadius:50,
     borderBottomLeftRadius:50,
     elevation:10,
-    borderWidth:1,
+    borderWidth:0,
     borderColor:Colors.defaultDarkColor,
     justifyContent:'center',
     alignItems:'center',
+    
 
   },
   cardTitle:{
