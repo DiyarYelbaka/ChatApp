@@ -6,10 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import CustomButton from '../../components/CustomButton'
 import Colors from '../../styles/Colors'
 import CustomSocialButton from '../../components/CustomSocialButton'
-import auth from '@react-native-firebase/auth';
 import { useForm, Controller } from "react-hook-form";
-import { showMessage} from "react-native-flash-message";
-import authErrorMessageParser from '../../utils/authErrorMessageParser'
 import { AuthContext } from '../../context/AuthContext'
 
 const SignInScreen = ({ navigation }: any) => {
