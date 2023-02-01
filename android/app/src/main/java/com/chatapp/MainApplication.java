@@ -1,4 +1,4 @@
-package com.chatapp;
+package com.chatappdimetra;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
