@@ -96,7 +96,7 @@ const InMessageScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <CustomHeaderTop onPress={() => navigation.goBack()} onBackButton={true} />
+      <CustomHeaderTop title={'ChatApp'} onPress={() => navigation.goBack()} onBackButton={true} />
       <LinearGradient style={styles.container} colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor]} >
 
         <FlatList
@@ -104,8 +104,8 @@ const InMessageScreen = ({ navigation, route }) => {
           renderItem={renderContent}
           keyExtractor={item => item.id}
           contentContainerStyle={{ paddingTop: 90 }}
-          inverted
-          
+          inverted={true}
+          initialNumToRender={20}
         />
 
         <View style={styles.messageContainer}>

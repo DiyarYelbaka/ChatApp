@@ -9,6 +9,9 @@ import { useSelector} from 'react-redux'
 
 
 const HomeScreen = ({navigation}) => {
+
+  
+
   const gradiantColors = useSelector((state) => state.backGradientColor)
   const DATA = [
     {
@@ -44,7 +47,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <>
-    <CustomHeaderTop onPress={()=> navigation.openDrawer()}/>
+    <CustomHeaderTop title={'ChatApp'} onPress={()=> navigation.openDrawer()}/>
     <ScrollView>
     <LinearGradient style={styles.container} colors={[  gradiantColors.defaultBlueColor,gradiantColors.defaultGreenColor ]} >
     <Carousel

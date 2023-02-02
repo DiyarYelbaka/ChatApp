@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     width: '80%',
     flexDirection: 'row',
     borderRadius: 50,
-    marginLeft: 5,
+    marginRight: 5,
     alignSelf: 'flex-end',
     justifyContent: 'flex-end',
     marginVertical: 4,

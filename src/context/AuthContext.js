@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import { Alert } from 'react-native'
 import { showMessage } from "react-native-flash-message";
 import authErrorMessageParser from "../utils/authErrorMessageParser";
@@ -10,6 +10,8 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(false)
+
+ 
 
   const register = async (email,password,username) => {
 

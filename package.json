@@ -21,6 +21,7 @@
     "@reduxjs/toolkit": "^1.9.2",
     "@types/react-native-snap-carousel": "^3.8.5",
     "date-fns": "^2.29.3",
+    "lottie-react-native": "^5.1.4",
     "moment": "^2.29.4",
     "react": "18.2.0",
     "react-hook-form": "^7.42.1",

@@ -10,6 +10,8 @@ import { useForm, Controller } from "react-hook-form";
 import { AuthContext } from '../../context/AuthContext'
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector } from 'react-redux'
+import Lottie from 'lottie-react-native';
+import Loading from '../../Loading'
 
 const SignInScreen = ({ navigation }: any) => {
 
@@ -29,12 +31,25 @@ const SignInScreen = ({ navigation }: any) => {
   }
 
 
+
+  // if(1>0){
+  //   return <Loading  />
+  // }
+
+
+
   return (
 
     <LinearGradient colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor,]} style={styles.container}>
       <ScrollView>
+        <View style={styles.lottieContainer} >
+          <Lottie
+            style={{ backgroundColor: 'white',flex:1 }}
+            autoPlay
+            source={require('../../assets/lottie/loginProfile.json')}
+          />
+        </View>
         <Text style={styles.title}>Login</Text>
-
         <CustomInput
           title={'Email'}
           placeholder={'Email Addres'}
@@ -86,7 +101,7 @@ const SignInScreen = ({ navigation }: any) => {
         {/* Component */}
         <CustomSocialButton title={'Or Login With '} />
 
-        <View style={{ flexDirection: 'row', marginHorizontal: 68, justifyContent: 'center', marginTop: Dimensions.get('window').height / 8 }} >
+        <View style={{ flexDirection: 'row', marginHorizontal: 68, justifyContent: 'center', marginTop: Dimensions.get('window').height / 12 ,marginBottom:20}} >
           <Text style={{ color: 'white' }} >Don't have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')} >
             <Text style={{ color: 'white', marginLeft: 5, fontWeight: 'bold' }} >Sign Up</Text>
@@ -110,8 +125,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     alignSelf: 'center',
     fontWeight: 'bold',
-    marginTop: 120,
-    marginBottom: 20
   },
   rememberMeContainer: {
     flexDirection: 'row',
@@ -119,6 +132,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     justifyContent: 'space-between',
     marginHorizontal: 68,
+  },
+  lottieContainer: {
+    height: 100,
+    backgroundColor: 'blue',
+    width: 100,
+    alignSelf: 'center',
+    borderRadius: 100,
+    overflow: 'hidden',
+    marginTop: 120,
+    elevation:10
   }
 });
 
