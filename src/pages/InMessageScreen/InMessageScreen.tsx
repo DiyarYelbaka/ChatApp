@@ -10,8 +10,18 @@ import parseContentData from '../../utils/parseContentData';
 import CustomMessageCard from '../../components/CustomMessageCard';
 import parseContentUserData from '../../utils/parseContentUserData';
 import { useSelector} from 'react-redux'
+import PushNotification from "react-native-push-notification";
 
 const InMessageScreen = ({ navigation, route }) => {
+
+  // const showNotification = () => {
+  //   PushNotification.localNotification({
+  //     title: '🌹Sevgililer Günü İndirimi',
+  //     message: '💎Sevdikleriniz için en anlamlı hediyeler artık %30 indirimli',
+  //     popInitialNotification: true,
+  //   });
+  // };
+
 
   const gradiantColors = useSelector((state) => state.backGradientColor)
 
@@ -115,6 +125,7 @@ const InMessageScreen = ({ navigation, route }) => {
               style={styles.input}
               value={value}
               onChangeText={setValue}
+              multiline={true}
             />
           </View>
 
@@ -148,14 +159,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.defaultGrayColor,
     width: '75%',
-    height: 50,
+    minHeight: 50,
     borderRadius: 50,
     elevation: 5
   },
   input: {
     backgroundColor: 'white',
     borderRadius: 50,
-    marginLeft: 10
+    marginLeft: 10,
   },
   button: {
     backgroundColor: 'white',
@@ -167,7 +178,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderWidth: 1,
     borderColor: Colors.defaultGrayColor,
-    elevation: 5
+    elevation: 5,
+  
   }
 })
 

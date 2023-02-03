@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
 import Colors from '../../styles/Colors';
 
+
 import { useSelector} from 'react-redux'
 
 
@@ -31,8 +32,11 @@ const HomeScreen = ({navigation}) => {
     },
   ];
 
+  
+
 
    const _renderItem = ({item}) => {
+
     return (
       <LinearGradient style={{height:200,marginTop:20,borderRadius:20,elevation:15}}  colors={[  gradiantColors.defaultBlueColor,gradiantColors.defaultGreenColor ]} >
           <Image
@@ -59,7 +63,10 @@ const HomeScreen = ({navigation}) => {
               autoplayDelay={5}
               loop={true}
       />
+     
       <Text>HomeScasdreen</Text>
+    
+     
     
         {/* <View style={{backgroundColor:'red',width:100,height:100}}>
         <Text>ask</Text>
