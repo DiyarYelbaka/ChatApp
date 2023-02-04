@@ -3,14 +3,11 @@
 
 <p >
   
-  <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/SignInScreen.jpeg" width="200"  >
-    <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/SignUpScreen.jpeg" width="200"  >
-    <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/RoomsScreen.jpg" width="200"  >
-    <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/modalScreen.jpg" width="200"  >
-    <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/ChatMessageScreen.jpg" width="200"  >
-    
-    
-    
+  <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/Pixel1.png" width="200"  >
+    <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/Pixel2.png" width="200"  >
+    <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/Pixel3.png" width="200"  >
+    <img src="https://github.com/DiyarYelbaka/ChatApp/blob/main/src/assets/ss/Pixel4.png" width="200"  >
+
  
 </p>
 
