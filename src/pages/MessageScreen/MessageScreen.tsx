@@ -8,8 +8,11 @@ import Modal from "react-native-modal";
 import { firebase } from '@react-native-firebase/database';
 import parseContentData from '../../utils/parseContentData';
 import { useSelector} from 'react-redux'
+import Config from 'react-native-config'
 
 const MessageScreen = ({ navigation }) => {
+
+  console.log(Config.FR_RDB)
 
   const gradiantColors = useSelector((state) => state.backGradientColor)
 
@@ -32,14 +35,14 @@ const MessageScreen = ({ navigation }) => {
       date: new Date().toISOString(),
     }
     
-    firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/`).push(contentObject)
+    firebase.app().database(Config.FR_RDB).ref(`rooms/`).push(contentObject)
 
     setModalVisible(false)
     setValue('')
   }
 
   useEffect(()=>{
-    const reference = firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/`)
+    const reference = firebase.app().database(Config.FR_RDB).ref(`rooms/`)
     reference.on('value',snapshot => {
      const contentData =  snapshot.val();
      
@@ -51,7 +54,7 @@ const MessageScreen = ({ navigation }) => {
 
  async function onDeleteCardPress(id){
   try {
-    await firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/${id}`).remove()
+    await firebase.app().database(Config.FR_RDB).ref(`rooms/${id}`).remove()
 
   } catch (error) {
     Alert.alert('hata','Silinemedi')

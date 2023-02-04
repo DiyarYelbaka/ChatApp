@@ -10,7 +10,7 @@ import parseContentData from '../../utils/parseContentData';
 import CustomMessageCard from '../../components/CustomMessageCard';
 import parseContentUserData from '../../utils/parseContentUserData';
 import { useSelector} from 'react-redux'
-import PushNotification from "react-native-push-notification";
+import Config from 'react-native-config';
 
 
 import Firebase from "@react-native-firebase/app"
@@ -44,7 +44,7 @@ const InMessageScreen = ({ navigation, route }) => {
   //User Çekme
   async function getUser() {
     try {
-      const reference = await firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`users/`)
+      const reference = await firebase.app().database(Config.FR_RDB).ref(`users/`)
       reference.on('value', snapshot => {
         const usersData = snapshot.val();
         const usersParsedData = parseContentUserData(usersData || {})
@@ -60,7 +60,7 @@ const InMessageScreen = ({ navigation, route }) => {
 
 
   async function ListDataFunc() {
-    const reference = firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`/rooms/${id}/messages/`)
+    const reference = firebase.app().database(Config.FR_RDB).ref(`/rooms/${id}/messages/`)
     reference.on('value', snapshot => {
       const contentData = snapshot.val();
       const parsedData = parseContentData(contentData || {})
@@ -97,13 +97,13 @@ const InMessageScreen = ({ navigation, route }) => {
 
     }
 
-    firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/${id}/messages/`).push(contentObject)
+    firebase.app().database(Config.FR_RDB).ref(`rooms/${id}/messages/`).push(contentObject)
 
     setValue('')
   }
 
   function onHandleHeart(item) {
-    firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/${id}/messages/${item.id}/`).update({ like: item.like + 1 })
+    firebase.app().database(Config.FR_RDB).ref(`rooms/${id}/messages/${item.id}/`).update({ like: item.like + 1 })
   }
 
   const renderContent = ({ item }) => <CustomMessageCard message={item} user={item.username} onPress={() => onHandleHeart(item)} />
