@@ -12,6 +12,10 @@ import parseContentUserData from '../../utils/parseContentUserData';
 import { useSelector} from 'react-redux'
 import PushNotification from "react-native-push-notification";
 
+
+import Firebase from "@react-native-firebase/app"
+
+
 const InMessageScreen = ({ navigation, route }) => {
 
   // const showNotification = () => {
@@ -21,7 +25,7 @@ const InMessageScreen = ({ navigation, route }) => {
   //     popInitialNotification: true,
   //   });
   // };
-
+  console.log(Firebase)
 
   const gradiantColors = useSelector((state) => state.backGradientColor)
 
@@ -88,7 +92,9 @@ const InMessageScreen = ({ navigation, route }) => {
       text: value,
       username: user.username,
       date: localISOTime,
-      like: 0
+      like: 0,
+      
+
     }
 
     firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`rooms/${id}/messages/`).push(contentObject)

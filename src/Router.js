@@ -83,7 +83,6 @@ function MyDrawer() {
      
     >
       <Drawer.Screen name="Feed" component={MyTabs} />
-      <Drawer.Screen name="Article" component={HomeScreen} />
     </Drawer.Navigator>
   );
 }

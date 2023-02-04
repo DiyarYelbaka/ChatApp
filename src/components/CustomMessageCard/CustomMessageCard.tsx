@@ -67,7 +67,7 @@ const CustomMessageCard = ({ message, onPress, user }) => {
           <View>
             <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }}
               colors={[gradiantColors.defaultDarkColor, gradiantColors.defaultGreenColor]} style={[{ elevation:5, borderTopLeftRadius: 15, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, justifyContent: 'center' }]} >
-              <Text style={[{ color: 'white', marginLeft: 1, textAlign: 'center', alignSelf: 'flex-start' },message.like>0 ? {paddingHorizontal:25}:{paddingHorizontal: 5 }]} >{message.text}</Text>
+              <Text style={[{ color: 'white', marginLeft: 1, textAlign: 'center', alignSelf: 'flex-start', },message.like>0 ? {paddingHorizontal:25}:{paddingHorizontal: 10,padding:5 }]} >{message.text}</Text>
               <Text style={{ color: 'white', alignSelf: 'flex-end', marginRight: 10, fontSize: 8, paddingHorizontal: 10, paddingVertical: 5 }} >{formatedDate}</Text>
             {
               message.like >0 &&
