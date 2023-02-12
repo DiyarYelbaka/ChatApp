@@ -13,6 +13,9 @@ import { useSelector } from 'react-redux'
 const CustomMessageCard = ({ message, onPress, user }) => {
 
   const [card, setCard] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const [onePress, setOnePress] = useState(true)
+  
 
   const gradiantColors = useSelector((state) => state.backGradientColor)
 
@@ -31,11 +34,15 @@ const CustomMessageCard = ({ message, onPress, user }) => {
         const found = usersParsedData.find(item => item.email === userMail);
         if (found.username == user) {
           setCard(false)
+          
         }
       })
     } catch (error) {
       console.log(error)
     }
+    setLoading(false)
+  
+
   }
 
 
@@ -43,20 +50,23 @@ const CustomMessageCard = ({ message, onPress, user }) => {
 
   return (
     <>
-      {card ?
+      
+      { card ? 
         <View style={styles.container}>
           <View style={[styles.left,{backgroundColor:gradiantColors.defaultGreenColor}]} />
           <View>
             <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }}
               colors={[gradiantColors.defaultGreenColor, Colors.defaultDarkColor]} style={{ flex: 1, elevation:10, borderTopRightRadius: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }} >
 
-              <Text style={{ marginLeft: 10, color: Colors.defaultDarkColor, fontSize: 10 }} >{message.username}</Text>
+              <Text style={{ marginLeft: 10, color: 'yellow', fontSize: 10 }} >{message.username}</Text>
               <Text style={{ color: 'white', marginLeft: 10, paddingHorizontal: 10, fontSize: 14, marginTop: 5 }} >{message.text}</Text>
               <Text style={{ color: 'white', alignSelf: 'flex-end', marginRight: 10, fontSize: 8, paddingHorizontal: 20, marginVertical: 5 }} >{formatedDate}</Text>
-
-              <TouchableOpacity style={{ position: 'absolute', right: 10, top: 5, flexDirection: 'row' }} onPress={onPress} >
-                <Heart width={13} height={13} color={'#DC143C'} />
-                {message.like > 0 && <Text style={{ alignSelf: 'flex-end', color: 'white', fontSize: 10 }} >{message.like}</Text>}
+              
+              <TouchableOpacity  style={{ position: 'absolute', right: 10, top: 5, flexDirection: 'row' }} onPress={message.like>=9 ? null : onPress } >
+                <Heart width={13} height={13} color={message.like > 0 ?'#DC143C' : 'gray'} />
+                {message.like > 0 && 
+                <Text style={{ alignSelf: 'flex-end', color: 'white', fontSize: 9 }} >{message.like>=9 ? '9+' : message.like}</Text>
+                }
               </TouchableOpacity>
 
             </LinearGradient>
@@ -67,22 +77,24 @@ const CustomMessageCard = ({ message, onPress, user }) => {
           <View>
             <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }}
               colors={[gradiantColors.defaultDarkColor, gradiantColors.defaultGreenColor]} style={[{ elevation:5, borderTopLeftRadius: 15, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, justifyContent: 'center' }]} >
-              <Text style={[{ color: 'white', marginLeft: 1, textAlign: 'center', alignSelf: 'flex-start', },message.like>0 ? {paddingHorizontal:25}:{paddingHorizontal: 10,padding:5 }]} >{message.text}</Text>
-              <Text style={{ color: 'white', alignSelf: 'flex-end', marginRight: 10, fontSize: 8, paddingHorizontal: 10, paddingVertical: 5 }} >{formatedDate}</Text>
-            {
+             
+             {
               message.like >0 &&
-              <View style={{ position: 'absolute', left: 7,top:3, flexDirection: 'row' }} onPress={onPress} >
-                <Heart width={13} height={13} color={'#DC143C'} />
-                 <Text style={{ alignSelf: 'flex-end', color: 'white', fontSize: 10 }} >{message.like}</Text>
+              <View style={{ left: 9,top:3, flexDirection: 'row' }} onPress={onPress} >
+                <Heart width={13} height={13} color={message.like > 0 ?'#DC143C' : 'gray'} />
+                <Text style={{ alignSelf: 'flex-end', color: 'white', fontSize: 9 }} >{message.like>=9 ? '9+' : message.like}</Text>
               </View>
             }
-            
-
+             
+              <Text style={[{ color: 'white', marginLeft: 1, textAlign: 'center', alignSelf: 'flex-start', },message.like>0 ? {paddingHorizontal:25}:{paddingHorizontal: 10,padding:5 }]} >{message.text}</Text>
+              <Text style={{ color: 'white', alignSelf: 'flex-end', marginRight: 10, fontSize: 8, paddingHorizontal: 10, paddingVertical: 5 }} >{formatedDate}</Text>
+          
             </LinearGradient>
           </View>
           <View style={[styles.right,{backgroundColor:gradiantColors.defaultGreenColor}]} />
         </View>
-     }
+      }
+     
     </>
 
   )

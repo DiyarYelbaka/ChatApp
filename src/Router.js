@@ -13,7 +13,7 @@ import FlashMessage from "react-native-flash-message";
 import CustomSideMenu from './components/CustomSideMenu';
 import CustomTabIcon from './components/CustomTabIcon';
 import Colors from './styles/Colors';
-import MessageScreen from './pages/MessageScreen';
+import RoomsScreen from './pages/RoomsScreen';
 import InMessageScreen from './pages/InMessageScreen';
 import auth from '@react-native-firebase/auth';
 
@@ -114,7 +114,7 @@ function MyTabs() {
           ),
         }}
       />
-      <Tab.Screen name="Message" component={MessageScreen}
+      <Tab.Screen name="Message" component={RoomsScreen}
       options={{
         tabBarIcon: ({ focused }) => (
           <CustomTabIcon title='Ana Sayfa' focused={focused} source={2} />

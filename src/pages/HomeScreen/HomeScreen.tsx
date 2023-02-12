@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image, TouchableOpacity, TextInput, Alert } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image, TouchableOpacity, TextInput, Alert,Linking } from 'react-native'
+import React, { useState,useEffect } from 'react'
 import CustomHeaderTop from '../../components/CustomHeaderTop'
 import LinearGradient from 'react-native-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
@@ -12,9 +12,11 @@ import VersionCheck from 'react-native-version-check';
 
 
 import { useSelector } from 'react-redux'
+import Config from 'react-native-config';
 
 
 const HomeScreen = ({ navigation }) => {
+  
 
   const [isModalVisible, setModalVisible] = useState(false)
 
@@ -54,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
         description,
         date: new Date().toISOString(),
       }
-      firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`requests/`).push(contentObject)
+      firebase.app().database(Config.FR_RDB).ref(`requests/`).push(contentObject)
       Alert.alert('Successful', 'Your request has been sent successfully.')
 
     } catch (error) {

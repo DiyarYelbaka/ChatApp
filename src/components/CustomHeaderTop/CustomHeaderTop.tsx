@@ -9,22 +9,26 @@ import Back from '../../assets/back.svg'
 import { useSelector} from 'react-redux'
 
 
-const CustomHeaderTop = ({onPress,onBackButton,title}:any) => {
+const CustomHeaderTop = ({onPress,onBackButton,title,onButton}:any) => {
     const gradiantColors = useSelector((state) => state.backGradientColor)
   return (
     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}}  colors={[gradiantColors.defaultDarkColor, gradiantColors.defaultBlueColor ]} style={styles.container}>
+       
         <TouchableOpacity style={styles.menu} onPress={onPress} >
             {onBackButton ? 
             <Back width={30} height={30}  style={{marginLeft:15,color:Colors.defaultGreenColor}} /> :
             <Menu width={30} height={30}  style={{marginLeft:15,color:Colors.defaultGreenColor}}   />
              }
-           
         </TouchableOpacity>
+        
+
         <View style={styles.menu2} >
             <Logo width={30} height={30} />
-            <Text style={styles.title} >{title}</Text>
+            <Text  style={styles.title} >{title}</Text>
         </View>
+       
         <View style={styles.menu3} />
+       
     </LinearGradient>
   )
 }
@@ -43,10 +47,11 @@ const styles = StyleSheet.create({
     },
     menu2:{
         //backgroundColor:'yellow',
-        flex:0.333,
+        // flex:0.333,
         flexDirection:'row',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        flex:1
     },
     menu3:{
        // backgroundColor:'green',

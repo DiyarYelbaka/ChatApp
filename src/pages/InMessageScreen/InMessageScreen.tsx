@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList,ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import CustomHeaderTop from '../../components/CustomHeaderTop'
 import LinearGradient from 'react-native-linear-gradient';
@@ -9,7 +9,7 @@ import auth from '@react-native-firebase/auth';
 import parseContentData from '../../utils/parseContentData';
 import CustomMessageCard from '../../components/CustomMessageCard';
 import parseContentUserData from '../../utils/parseContentUserData';
-import { useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import Config from 'react-native-config';
 
 
@@ -25,12 +25,14 @@ const InMessageScreen = ({ navigation, route }) => {
   //     popInitialNotification: true,
   //   });
   // };
-  console.log(Firebase)
+
 
   const gradiantColors = useSelector((state) => state.backGradientColor)
 
-  const { id } = route.params;
+  const { id, title } = route.params;
 
+
+  const [loading, setLoading] = useState(true)
   const [value, setValue]: any = useState('')
   const [contentList, setContentList]: any = useState('')
   const [user, setUser]: any = useState('')
@@ -40,6 +42,7 @@ const InMessageScreen = ({ navigation, route }) => {
     ListDataFunc()
     getUser()
   }, [])
+  
 
   //User Çekme
   async function getUser() {
@@ -51,11 +54,14 @@ const InMessageScreen = ({ navigation, route }) => {
         const userMail = auth().currentUser?.email
         const found = usersParsedData.find(item => item.email === userMail);
         setUser(found)
+        setLoading(false)
       })
 
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
+   
   }
 
 
@@ -69,12 +75,6 @@ const InMessageScreen = ({ navigation, route }) => {
     })
   }
 
-
-
-
-  function onSendPress() {
-    // firebase.app().database('"https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/"').ref('messages/')
-  }
 
   function sendContent() {
 
@@ -93,8 +93,6 @@ const InMessageScreen = ({ navigation, route }) => {
       username: user.username,
       date: localISOTime,
       like: 0,
-      
-
     }
 
     firebase.app().database(Config.FR_RDB).ref(`rooms/${id}/messages/`).push(contentObject)
@@ -103,18 +101,30 @@ const InMessageScreen = ({ navigation, route }) => {
   }
 
   function onHandleHeart(item) {
+    if(item.like>= 9){
+      return null
+    }
     firebase.app().database(Config.FR_RDB).ref(`rooms/${id}/messages/${item.id}/`).update({ like: item.like + 1 })
   }
+  
 
-  const renderContent = ({ item }) => <CustomMessageCard message={item} user={item.username} onPress={() => onHandleHeart(item)} />
+  const renderContent = ({ item }) => (
+   
+    <CustomMessageCard
+      message={item}
+      user={item.username}
+      onPress={() => onHandleHeart(item)}
+    />
+   
+  )
 
 
 
   return (
     <>
-      <CustomHeaderTop title={'ChatApp'} onPress={() => navigation.goBack()} onBackButton={true} />
+      <CustomHeaderTop title={title} onPress={() => navigation.goBack()} onBackButton={true} />
       <LinearGradient style={styles.container} colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor]} >
-
+     
         <FlatList
           data={contentList}
           renderItem={renderContent}
@@ -123,6 +133,7 @@ const InMessageScreen = ({ navigation, route }) => {
           inverted={true}
           initialNumToRender={20}
         />
+      
 
         <View style={styles.messageContainer}>
           <View style={styles.inputContainer}>
@@ -185,7 +196,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.defaultGrayColor,
     elevation: 5,
-  
+
   }
 })
 

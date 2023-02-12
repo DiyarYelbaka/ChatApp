@@ -1,18 +1,40 @@
-import { View, Text,StyleSheet,TouchableOpacity,SafeAreaView,Alert } from 'react-native'
+import { View, Text,StyleSheet,TouchableOpacity,SafeAreaView,Alert,Linking,BackHandler } from 'react-native'
 import React,{useEffect} from 'react'
 import Router from './src/Router';
 import { AuthProvider } from './src/context/AuthContext';
 import SplashScreen from 'react-native-splash-screen'
 import messaging from '@react-native-firebase/messaging';
-
+import Config from 'react-native-config';
+import { firebase } from '@react-native-firebase/database';
+import VersionCheck from 'react-native-version-check';
 
 
 const App = () => {
+
+  async function getVersiyon() {
+    const versionApp = VersionCheck.getCurrentVersion()
+    const reference = firebase.app().database(Config.FR_RDB).ref(`/versiyon`)
+    reference.on('value', snapshot => {
+      const DBversion = snapshot.val();
+      console.log(DBversion,versionApp)
+      if(versionApp != DBversion)
+      Alert.alert('Ops', 'A new version is available for the app, please update it!', [
+        {text: 'Update', onPress: async() => {
+         await Linking.openURL('https://play.google.com/apps/internaltest/4700941378232812679') 
+
+         BackHandler.exitApp();
+          }},
+      ]);
+    },   {cancelable: false})
+  }
+ 
+
 
   useEffect(()=>{
     SplashScreen.hide()
     requestUserPermission()
     getToken()
+    getVersiyon()
 
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));

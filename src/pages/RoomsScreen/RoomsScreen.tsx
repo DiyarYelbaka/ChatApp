@@ -10,9 +10,7 @@ import parseContentData from '../../utils/parseContentData';
 import { useSelector} from 'react-redux'
 import Config from 'react-native-config'
 
-const MessageScreen = ({ navigation }) => {
-
-  console.log(Config.FR_RDB)
+const RoomsScreen = ({ navigation }) => {
 
   const gradiantColors = useSelector((state) => state.backGradientColor)
 
@@ -63,8 +61,10 @@ const MessageScreen = ({ navigation }) => {
 
   
 
+  
+
   const Item = ({title,id}) => (
-    <TouchableOpacity  onLongPress={()=> onDeleteCardPress(id)} onPress={()=> navigation.navigate("InMessageScreen",{id}) }>
+    <TouchableOpacity  onLongPress={()=> onDeleteCardPress(id)} onPress={()=> navigation.navigate("InMessageScreen",{id,title}) }>
     <LinearGradient style={styles.cardContainer} colors={[gradiantColors.defaultGreenColor,gradiantColors.defaultBlueColor ]} >
       <Text style={styles.cardTitle}>{title}</Text>
     </LinearGradient>
@@ -182,4 +182,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default MessageScreen
+export default RoomsScreen
