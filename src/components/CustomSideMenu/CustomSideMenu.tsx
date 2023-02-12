@@ -75,7 +75,7 @@ const CustomSideMenu = () => {
             </View>
             <View style={{ width: '50%', height: 1, backgroundColor: 'white', marginTop: 15, alignSelf: 'center' }} />
 
-            <Text style={{ alignSelf: 'center', fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 10 }} >Hoşgeldin</Text>
+            <Text style={{ alignSelf: 'center', fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 10 }} >Welcome</Text>
             <Text style={{ alignSelf: 'center', color: 'white', fontSize: 22, fontWeight: 'bold', marginTop: 5 }} >{user.username}</Text>
 
 

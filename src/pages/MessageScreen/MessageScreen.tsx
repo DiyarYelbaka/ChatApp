@@ -77,7 +77,6 @@ const MessageScreen = ({ navigation }) => {
     <>
       <CustomHeaderTop title={'ChatApp'} onPress={() => navigation.openDrawer()} />
       <LinearGradient colors={[gradiantColors.defaultBlueColor,gradiantColors.defaultGreenColor, ]} style={styles.container}>
-      <View style={{marginTop:30}} />
       <FlatList
         data={contentList}
         renderItem={({item}) => <Item title={item.title} id={item.id} />}

@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity, Dimensions } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import BgImage from '../../assets/Login.png'
 import CustomInput from '../../components/CustomInput'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -13,6 +13,9 @@ import auth from '@react-native-firebase/auth';
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector} from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient';
+import parseContentUserData from '../../utils/parseContentUserData'
+import { firebase } from '@react-native-firebase/database';
+
 
 const SignUpScreen = ({ navigation }: any) => {
   
@@ -21,18 +24,44 @@ const SignUpScreen = ({ navigation }: any) => {
 
   const pwd = watch('password')
 
-
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
- 
+  const [existingUsernames, setExistingUsernames] = useState<string[]>([]);
 
   const {register} = useContext(AuthContext)
 
 async function onSignUpPress(data) {
-    const {email,password,username} = data;
+  const {email,password,username} = data;
+  if (existingUsernames.includes(username)) {
+    showMessage({
+      message : "Username already exists",
+      type: "danger",
+     });
+  }else{
     return register(email,password,username)
   }
+
+    
+}
+
+  useEffect(() => {
+    getExistingUsernames();
+}, [])
+
+async function getExistingUsernames() {
+  try {
+    const reference = await firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`users/`);
+    reference.on("value", (snapshot) => {
+      const usersData = snapshot.val();
+      const usersParsedData = parseContentUserData(usersData || {});
+
+      const usernames = usersParsedData.map((item) => item.username);
+      setExistingUsernames(usernames);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 
 
   return (
