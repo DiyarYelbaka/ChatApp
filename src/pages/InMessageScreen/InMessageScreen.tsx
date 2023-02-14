@@ -11,9 +11,10 @@ import CustomMessageCard from '../../components/CustomMessageCard';
 import parseContentUserData from '../../utils/parseContentUserData';
 import { useSelector } from 'react-redux'
 import Config from 'react-native-config';
+import { FlashList } from "@shopify/flash-list";
 
 
-import Firebase from "@react-native-firebase/app"
+
 
 
 const InMessageScreen = ({ navigation, route }) => {
@@ -109,7 +110,6 @@ const InMessageScreen = ({ navigation, route }) => {
   
 
   const renderContent = ({ item }) => (
-   
     <CustomMessageCard
       message={item}
       user={item.username}
@@ -129,9 +129,11 @@ const InMessageScreen = ({ navigation, route }) => {
           data={contentList}
           renderItem={renderContent}
           keyExtractor={item => item.id}
-          contentContainerStyle={{ paddingTop: 90 }}
           inverted={true}
           initialNumToRender={20}
+          contentContainerStyle={{ paddingTop: 90,}}
+          
+          
         />
       
 

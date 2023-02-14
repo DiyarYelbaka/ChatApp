@@ -73,24 +73,24 @@ const CustomSideMenu = () => {
                     />
                 </View>
             </View>
-            <View style={{ width: '50%', height: 1, backgroundColor: 'white', marginTop: 15, alignSelf: 'center' }} />
+            <View style={styles.line} />
 
-            <Text style={{ alignSelf: 'center', fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 10 }} >Welcome</Text>
-            <Text style={{ alignSelf: 'center', color: 'white', fontSize: 22, fontWeight: 'bold', marginTop: 5 }} >{user.username}</Text>
+            <Text style={styles.welcome} >Welcome</Text>
+            <Text style={styles.username} >{user.username}</Text>
 
 
             <TouchableOpacity style={styles.button} onPress={handlePress} >
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }} >Log Out</Text>
+                <Text style={styles.logOut} >Log Out</Text>
             </TouchableOpacity>
 
             <View style={{ height: 100, top: 50 }} >
-                <Text style={{ alignSelf: 'center', color: 'white', fontSize: 19, fontWeight: 'bold' }} >Select Tema</Text>
-                <View style={{ flexDirection: 'row', alignSelf: 'center', width: '50%', justifyContent: 'space-around', marginTop: 20 }} >
+                <Text style={styles.temaTitle} >Select Tema</Text>
+                <View style={styles.selectTemaContainer} >
                     <TouchableOpacity onPress={onHandleFirsTema} >
-                        <LinearGradient colors={[Colors.defaultDarkColor, Colors.defaultGreenColor]} style={{ height: 50, width: 50, borderRadius: 50, borderWidth: 2, borderColor: 'white' }} />
+                        <LinearGradient colors={[Colors.defaultDarkColor, Colors.defaultGreenColor]} style={styles.gradiantBG} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onHandleSecondTema}>
-                        <LinearGradient colors={['#292F3F', Colors.defaultBlueColor, '#4b749f']} style={{ height: 50, width: 50, borderRadius: 50, borderWidth: 2, borderColor: 'white' }} />
+                        <LinearGradient colors={['#292F3F', Colors.defaultBlueColor, '#4b749f']} style={styles.gradiantBG} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -126,13 +126,59 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 60,
     },
-    lottieContainer:{
-        height: 130, 
-        backgroundColor: 'bluet', 
-        width: 130, 
-        alignSelf: 'center', 
-        borderRadius: 100, 
+    lottieContainer: {
+        height: 130,
+        backgroundColor: 'bluet',
+        width: 130,
+        alignSelf: 'center',
+        borderRadius: 100,
         overflow: 'hidden'
+    },
+    line: {
+        width: '50%',
+        height: 1,
+        backgroundColor: 'white',
+        marginTop: 15,
+        alignSelf: 'center'
+    },
+    welcome: {
+        alignSelf: 'center',
+        fontSize: 25,
+        color: 'white',
+        ontWeight: 'bold',
+        marginTop: 10
+    },
+    username: {
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginTop: 5
+    },
+    temaTitle: {
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 19,
+        fontWeight: 'bold'
+    },
+    selectTemaContainer: {
+        flexDirection: 'row',
+        alignSelf: 'center',
+        width: '50%',
+        justifyContent: 'space-around',
+        marginTop: 20
+    },
+    gradiantBG: {
+        height: 50,
+        width: 50,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: 'white'
+    },
+    logOut: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16
     }
 })
 

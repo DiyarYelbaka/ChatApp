@@ -4,6 +4,7 @@ import { showMessage } from "react-native-flash-message";
 import authErrorMessageParser from "../utils/authErrorMessageParser";
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/database';
+import Config from "react-native-config";
 
 export const AuthContext = createContext();
 
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
         username:username,
         email:userMail
       }
-     firebase.app().database("https://chatapp-9bb02-default-rtdb.europe-west1.firebasedatabase.app/").ref(`users`).push(contentObject)
+     firebase.app().database(Config.FR_RDB).ref(`users`).push(contentObject)
       showMessage({
        message : "Kullanıcı Oluşturuldu",
        type: "success",
