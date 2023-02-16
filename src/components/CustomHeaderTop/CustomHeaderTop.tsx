@@ -4,14 +4,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import Menu from '../../assets/menu.svg'
 import Logo from '../../assets/message.svg'
 import Colors from '../../styles/Colors'
-import BG from '../../assets/Login.png'
 import Back from '../../assets/back.svg'
 import { useSelector } from 'react-redux'
 
-type Props = {
+interface Props  {
     title: string
     onPress(): void
-    onBackButton: boolean
+    onBackButton?: boolean
 };
 
 

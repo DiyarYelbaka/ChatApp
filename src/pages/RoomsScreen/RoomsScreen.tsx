@@ -10,14 +10,14 @@ import parseContentData from '../../utils/parseContentData';
 import { useSelector} from 'react-redux'
 import Config from 'react-native-config'
 
-const RoomsScreen = ({ navigation }) => {
+const RoomsScreen = ({ navigation }:any) => {
 
-  const gradiantColors = useSelector((state) => state.backGradientColor)
+  const gradiantColors = useSelector((state:any) => state.backGradientColor)
 
-  const [value, setValue]:any = useState('')
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [value, setValue] = useState<string>('')
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [contentList, setContentList]:any = useState('')
-  const [user, setUser]:any = useState('')
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -46,7 +46,7 @@ const RoomsScreen = ({ navigation }) => {
      
      const parsedData = parseContentData(contentData || {})
      setContentList(parsedData)
-     
+
     })
   },[])
 
@@ -60,10 +60,15 @@ const RoomsScreen = ({ navigation }) => {
   }
 
   
-
   
 
-  const Item = ({title,id}) => (
+  interface ItemProps {
+    title: string;
+    id: string;
+    onDeleteCardPress?: (id: string) => void;
+  }
+
+  const Item: React.FC<ItemProps>  = ({title,id}) => (
     <TouchableOpacity  onLongPress={()=> onDeleteCardPress(id)} onPress={()=> navigation.navigate("InMessageScreen",{id,title}) }>
     <LinearGradient style={styles.cardContainer} colors={[gradiantColors.defaultGreenColor,gradiantColors.defaultBlueColor ]} >
       <Text style={styles.cardTitle}>{title}</Text>

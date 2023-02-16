@@ -5,15 +5,19 @@ import Colors from '../../styles/Colors'
 import Dot from '../../assets/dot.svg'
 import Message from '../../assets/message-menu.svg'
 
+interface Props{
+    source:string
+    focused:boolean
+}
 
-const CustomTabIcon = ({ source, focused, title }: any) => {
+const CustomTabIcon: React.FC<Props> = ({ source, focused }: any) => {
     return (
         <View>
             <View style={{ alignItems: 'center', justifyContent: 'center', width:50}}>
-                {source==1 && <Home width="100%" height="25" 
+                {source=='1' && <Home width="100%" height="25" 
                     style={{ color: focused ? Colors.defaultGreenColor : 'white' }}
                 />}
-                {source==2 && <Message width='100%' height="25"
+                {source=='2' && <Message width='100%' height="25"
                     style={{ color: focused ?  Colors.defaultGreenColor : 'white' }}
                 />}
                   {focused && 

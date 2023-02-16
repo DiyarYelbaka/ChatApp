@@ -1,7 +1,5 @@
 import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import BG from '../../assets/Login.png'
-import profil from '../../assets/profile.png'
 import Colors from '../../styles/Colors'
 import LinearGradient from 'react-native-linear-gradient';
 import { AuthContext } from '../../context/AuthContext'
@@ -13,11 +11,18 @@ import Lottie from 'lottie-react-native';
 import { useSelector, useDispatch } from 'react-redux'
 import { setGreenColor, setGrayColor, setDarkColor, setBlueColor } from '../../redux/slices/colorTemaSlice'
 
+
 const CustomSideMenu = () => {
 
-    const [user, setUser]: any = useState('')
+    interface User {
+      username: string;
+    }
+      
+    
 
-    const gradiantColors = useSelector((state) => state.backGradientColor)
+    const [user, setUser] = useState<User>({username:''})
+
+    const gradiantColors = useSelector((state:any) => state.backGradientColor)
     const dispatch = useDispatch()
 
 

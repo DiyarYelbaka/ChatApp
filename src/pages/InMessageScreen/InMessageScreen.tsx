@@ -17,7 +17,7 @@ import { FlashList } from "@shopify/flash-list";
 
 
 
-const InMessageScreen = ({ navigation, route }) => {
+const InMessageScreen = ({ navigation, route }:any) => {
 
   // const showNotification = () => {
   //   PushNotification.localNotification({
@@ -28,15 +28,17 @@ const InMessageScreen = ({ navigation, route }) => {
   // };
 
 
-  const gradiantColors = useSelector((state) => state.backGradientColor)
+  const gradiantColors = useSelector((state:any) => state.backGradientColor)
 
   const { id, title } = route.params;
 
+  interface User {
+    username: string;
+  }
 
-  const [loading, setLoading] = useState(true)
-  const [value, setValue]: any = useState('')
-  const [contentList, setContentList]: any = useState('')
-  const [user, setUser]: any = useState('')
+  const [value, setValue] = useState<string>('')
+  const [contentList, setContentList]:any= useState('')
+  const [user, setUser] = useState<User>({username:''})
 
 
   useEffect(() => {
@@ -55,12 +57,11 @@ const InMessageScreen = ({ navigation, route }) => {
         const userMail = auth().currentUser?.email
         const found = usersParsedData.find(item => item.email === userMail);
         setUser(found)
-        setLoading(false)
+
       })
 
     } catch (error) {
       console.log(error)
-      setLoading(false)
     }
    
   }
@@ -100,20 +101,27 @@ const InMessageScreen = ({ navigation, route }) => {
 
     setValue('')
   }
-
-  function onHandleHeart(item) {
-    if(item.like>= 9){
-      return null
-    }
-    firebase.app().database(Config.FR_RDB).ref(`rooms/${id}/messages/${item.id}/`).update({ like: item.like + 1 })
+  // Kalp Sayısı Ekleme
+  // function onHandleHeart(item) {
+  //   if(item.like>= 9){
+  //     return null
+  //   }
+  //   firebase.app().database(Config.FR_RDB).ref(`rooms/${id}/messages/${item.id}/`).update({ like: item.like + 1 })
+  // }
+  
+  interface RenderContentProps {
+    item: {
+      username: string;
+      text: string;
+      like: number;
+      date: string;
+      id:string
+    };
   }
   
-
-  const renderContent = ({ item }) => (
+  const renderContent: React.FC<RenderContentProps> = ({ item }) => (
     <CustomMessageCard
       message={item}
-      user={item.username}
-      onPress={() => onHandleHeart(item)}
     />
    
   )

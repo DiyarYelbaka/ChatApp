@@ -1,6 +1,5 @@
-import { View, Text, ImageBackground, StyleSheet, Image, Switch, TouchableOpacity, Dimensions } from 'react-native'
+import { View, Text,  StyleSheet,  Switch, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useContext, useState } from 'react'
-import BgImage from '../../assets/Login.png'
 import CustomInput from '../../components/CustomInput'
 import { ScrollView } from 'react-native-gesture-handler'
 import CustomButton from '../../components/CustomButton'
@@ -15,27 +14,23 @@ import Loading from '../../Loading'
 
 const SignInScreen = ({ navigation }: any) => {
 
-  const gradiantColors = useSelector((state) => state.backGradientColor)
-  const { handleSubmit, control, formState: { errors } } = useForm();
+  const gradiantColors = useSelector((state:any) => state.backGradientColor)
+  const { handleSubmit, control, formState: { errors } } = useForm<{ email: string, password: string }>();
 
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const { login } = useContext(AuthContext)
 
-  async function onLoginPress(data) {
+  
+  
+
+  async function onLoginPress(data: { password: string, email: string }) {
     const { password, email } = data;
     return login(email, password)
   }
-
-
-
-  // if(1>0){
-  //   return <Loading  />
-  // }
-
 
 
   return (

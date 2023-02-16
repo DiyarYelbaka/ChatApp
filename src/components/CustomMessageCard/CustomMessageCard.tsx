@@ -10,14 +10,24 @@ import { firebase } from '@react-native-firebase/database';
 import parseContentUserData from '../../utils/parseContentUserData'
 import { useSelector } from 'react-redux'
 
-const CustomMessageCard = ({ message, onPress, user }) => {
+type message ={
+    username:string
+    text:string
+    like:number
+    date:string
+}
 
-  const [card, setCard] = useState(true)
-  const [loading, setLoading] = useState(true)
-  const [onePress, setOnePress] = useState(true)
+type Props = {
+  message: message
+
+};
+
+const CustomMessageCard:React.FC<Props> = ({ message }) => {
 
 
-  const gradiantColors = useSelector((state) => state.backGradientColor)
+
+  const [card, setCard] = useState<boolean>(true)
+  const gradiantColors = useSelector((state:any) => state.backGradientColor)
 
 
   useEffect(() => {
@@ -32,7 +42,7 @@ const CustomMessageCard = ({ message, onPress, user }) => {
         const usersParsedData = parseContentUserData(usersData || {})
         const userMail = auth().currentUser?.email
         const found = usersParsedData.find(item => item.email === userMail);
-        if (found.username == user) {
+        if (found.username == message.username) {
           setCard(false)
 
         }
@@ -40,7 +50,7 @@ const CustomMessageCard = ({ message, onPress, user }) => {
     } catch (error) {
       console.log(error)
     }
-    setLoading(false)
+    
 
 
   }

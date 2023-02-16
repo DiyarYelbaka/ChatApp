@@ -19,16 +19,16 @@ export const colorTemaSlice = createSlice({
   name: 'colors',
   initialState,
   reducers: {
-    setGreenColor: (state, action: PayloadAction<number>) => {
+    setGreenColor: (state, action: PayloadAction<string>) => {
       state.defaultGreenColor = action.payload
     },
-    setGrayColor: (state, action: PayloadAction<number>) => {
+    setGrayColor: (state, action: PayloadAction<string>) => {
       state.defaultGrayColor = action.payload
     },
-    setDarkColor: (state, action: PayloadAction<number>) => {
+    setDarkColor: (state, action: PayloadAction<string>) => {
       state.defaultDarkColor = action.payload
     },
-    setBlueColor: (state, action: PayloadAction<number>) => {
+    setBlueColor: (state, action: PayloadAction<string>) => {
       state.defaultBlueColor = action.payload
     },
   },

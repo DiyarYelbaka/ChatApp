@@ -2,11 +2,10 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import React, { useState } from 'react'
 import Visible from '../../assets/openEye.svg'
 import OffVisible from '../../assets/closeEye.svg'
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import Colors from '../../styles/Colors';
-import Lottie from 'lottie-react-native';
 
-type Props = {
+interface Props {
   title: string
   placeholder: string
   visiblePassword: boolean
@@ -16,10 +15,10 @@ type Props = {
   secureTextEntry: boolean
 };
 
-const CustomInput: React.FC<Props> = ({ title, placeholder, visiblePassword = false, name, control, rules = {}, onChange, onBlur, value, secureTextEntry }) => {
+const CustomInput: React.FC<Props> = ({ title, placeholder, visiblePassword = false, name, control, rules = {}, secureTextEntry }) => {
 
 
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState<boolean>(false)
 
   return (
     <>
@@ -39,7 +38,7 @@ const CustomInput: React.FC<Props> = ({ title, placeholder, visiblePassword = fa
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                secureTextEntry={ visible ? null :  secureTextEntry}
+                secureTextEntry={ visible ? false :  secureTextEntry}
 
               />
               <TouchableOpacity style={styles.eyes} onPress={()=> setVisible(!visible)}  >

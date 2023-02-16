@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image, TouchableOpacity, TextInput, Alert,Linking } from 'react-native'
-import React, { useState,useEffect } from 'react'
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image, TouchableOpacity, TextInput, Alert, Linking } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import CustomHeaderTop from '../../components/CustomHeaderTop'
 import LinearGradient from 'react-native-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
@@ -15,13 +15,13 @@ import { useSelector } from 'react-redux'
 import Config from 'react-native-config';
 
 
-const HomeScreen = ({ navigation }) => {
-  
+const HomeScreen = ({ navigation }:any) => {
+
 
   const [isModalVisible, setModalVisible] = useState(false)
 
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
 
   const versionApp = VersionCheck.getCurrentVersion()
 
@@ -68,7 +68,15 @@ const HomeScreen = ({ navigation }) => {
 
   }
 
-  const _renderItem = ({ item }) => {
+  interface Item {
+    url: string;
+  }
+  
+  interface RenderItemProps {
+    item: Item;
+  }
+
+  const _renderItem = ({ item }: RenderItemProps) => {
 
     return (
       <LinearGradient style={{ height: 200, marginTop: 20, borderRadius: 20, elevation: 15, marginBottom: 20 }} colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor]} >
@@ -96,7 +104,6 @@ const HomeScreen = ({ navigation }) => {
             loop={true}
           />
 
-        
 
           <LinearGradient style={styles.card} colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor]} >
             <View >
@@ -123,8 +130,8 @@ const HomeScreen = ({ navigation }) => {
           </LinearGradient>
 
           <LinearGradient style={styles.versionContainer} colors={[gradiantColors.defaultBlueColor, gradiantColors.defaultGreenColor]}>
-            <Text style={{ color: '#FFFF00', fontSize: 18,fontWeight:'bold' }} >Beta Version</Text>
-            <Text style={{ color: 'white', fontSize: 18,fontWeight:'bold' }} >v.{versionApp}</Text>
+            <Text style={{ color: '#FFFF00', fontSize: 18, fontWeight: 'bold' }} >Beta Version</Text>
+            <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }} >v.{versionApp}</Text>
           </LinearGradient>
 
         </ScrollView>
@@ -184,7 +191,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
-    marginTop:10
+    marginTop: 10
   },
   modalContainer: {
     backgroundColor: 'white',

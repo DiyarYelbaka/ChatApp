@@ -5,7 +5,7 @@ import Google from '../../assets/google.svg'
 import Facebook from '../../assets/facebook.svg'
 import Apple from '../../assets/apple.svg'
 
-type Props = {
+interface Props  {
   title:string
  
 };
